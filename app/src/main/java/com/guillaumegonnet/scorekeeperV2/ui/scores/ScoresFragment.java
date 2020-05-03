@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,8 +31,8 @@ public class ScoresFragment extends Fragment implements View.OnClickListener {
     private String mTeamName2;
     private TextView mScoreText1;
     private TextView mScoreText2;
-    private EditText mTeamNameText1;
-    private EditText mTeamNameText2;
+    private TextView mTeamNameText1;
+    private TextView mTeamNameText2;
     private Button mCancelBtn;
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.guillaumegonnet.scorekeeper";
@@ -49,6 +48,22 @@ public class ScoresFragment extends Fragment implements View.OnClickListener {
         mTeamNameText1 = root.findViewById(R.id.team1);
         mTeamNameText2 = root.findViewById(R.id.team2);
         mCancelBtn = root.findViewById(R.id.cancel_btn);
+
+        mPreferences = getActivity().getSharedPreferences(sharedPrefFile, getActivity().MODE_PRIVATE);
+
+        if (mPreferences != null) {
+            mScore1 = mPreferences.getInt(STATE_SCORE_1, 0);
+            mScore2 = mPreferences.getInt(STATE_SCORE_2, 0);
+            mScore1Before = mPreferences.getInt(STATE_SCORE_1_BEFORE, 0);
+            mScore2Before = mPreferences.getInt(STATE_SCORE_2_BEFORE, 0);
+            mTeamName1 = mPreferences.getString(STATE_NAME_1, getString(R.string.team_1));
+            mTeamName2 = mPreferences.getString(STATE_NAME_2, getString(R.string.team_2));
+
+            mScoreText1.setText(String.valueOf(mScore1));
+            mScoreText2.setText(String.valueOf(mScore2));
+            mTeamNameText1.setText(mTeamName1);
+            mTeamNameText2.setText(mTeamName2);
+        }
 
         // Create listeners for - buttons
         for (int i = 1; i < 8; i++) {
@@ -66,6 +81,8 @@ public class ScoresFragment extends Fragment implements View.OnClickListener {
                 root.findViewById(resId).setOnClickListener(this);
             }
         }
+        root.findViewById(R.id.reset_btn).setOnClickListener(this);
+        root.findViewById(R.id.cancel_btn).setOnClickListener(this);
 
         /*final TextView textView = root.findViewById(R.id.text_scores);
         mScoresViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -84,117 +101,145 @@ public class ScoresFragment extends Fragment implements View.OnClickListener {
 
         switch (viewId) {
             case R.id.decreaseTeam1By1:
-                mScore1--;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, -1);
                 break;
             case R.id.decreaseTeam1By2:
-                mScore1 -= 2;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, -2);
                 break;
             case R.id.decreaseTeam1By3:
-                mScore1 -= 3;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, -3);
                 break;
             case R.id.decreaseTeam1By4:
-                mScore1 -= 4;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, -4);
                 break;
             case R.id.decreaseTeam1By5:
-                mScore1 -= 5;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, -5);
                 break;
             case R.id.decreaseTeam1By6:
-                mScore1 -= 6;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, -6);
                 break;
             case R.id.decreaseTeam1By7:
-                mScore1 -= 7;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, -7);
                 break;
             case R.id.decreaseTeam2By1:
-                mScore2--;
-                mScoreText2.setText(String.valueOf(mScore2));
+                changeScore(2, -1);
                 break;
             case R.id.decreaseTeam2By2:
-                mScore2 -= 2;
-                mScoreText2.setText(String.valueOf(mScore2));
+                changeScore(2, -2);
                 break;
             case R.id.decreaseTeam2By3:
-                mScore2 -= 3;
-                mScoreText2.setText(String.valueOf(mScore2));
+                changeScore(2, -3);
                 break;
             case R.id.decreaseTeam2By4:
-                mScore2 -= 4;
-                mScoreText2.setText(String.valueOf(mScore2));
+                changeScore(2, -4);
                 break;
             case R.id.decreaseTeam2By5:
-                mScore2 -= 5;
-                mScoreText2.setText(String.valueOf(mScore2));
+                changeScore(2, -5);
                 break;
             case R.id.decreaseTeam2By6:
-                mScore2 -= 6;
-                mScoreText2.setText(String.valueOf(mScore2));
+                changeScore(2, -6);
                 break;
             case R.id.decreaseTeam2By7:
-                mScore2 -= 7;
-                mScoreText2.setText(String.valueOf(mScore2));
+                changeScore(2, -7);
                 break;
             case R.id.increaseTeam1By1:
-                mScore1++;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, 1);
                 break;
             case R.id.increaseTeam1By2:
-                mScore1 += 2;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, 2);
                 break;
             case R.id.increaseTeam1By3:
-                mScore1 += 3;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, 3);
                 break;
             case R.id.increaseTeam1By4:
-                mScore1 += 4;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, 4);
                 break;
             case R.id.increaseTeam1By5:
-                mScore1 += 5;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, 5);
                 break;
             case R.id.increaseTeam1By6:
-                mScore1 += 6;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, 6);
                 break;
             case R.id.increaseTeam1By7:
-                mScore1 += 7;
-                mScoreText1.setText(String.valueOf(mScore1));
+                changeScore(1, 7);
                 break;
             case R.id.increaseTeam2By1:
-                mScore2++;
-                mScoreText2.setText(String.valueOf(mScore2));
+                changeScore(2, 1);
                 break;
             case R.id.increaseTeam2By2:
-                mScore2 += 2;
-                mScoreText2.setText(String.valueOf(mScore2));
+                changeScore(2, 2);
                 break;
             case R.id.increaseTeam2By3:
-                mScore2 += 3;
-                mScoreText2.setText(String.valueOf(mScore2));
+                changeScore(2, 3);
                 break;
             case R.id.increaseTeam2By4:
-                mScore2 += 4;
-                mScoreText2.setText(String.valueOf(mScore2));
+                changeScore(2, 4);
                 break;
             case R.id.increaseTeam2By5:
-                mScore2 += 5;
-                mScoreText2.setText(String.valueOf(mScore2));
+                changeScore(2, 5);
                 break;
             case R.id.increaseTeam2By6:
-                mScore2 += 6;
-                mScoreText2.setText(String.valueOf(mScore2));
+                changeScore(2, 6);
                 break;
             case R.id.increaseTeam2By7:
-                mScore2 += 7;
+                changeScore(2, 7);
+                break;
+            case R.id.cancel_btn:
+                cancelLastAction(v);
+                break;
+            case R.id.reset_btn:
+                resetScores(v);
+                break;
+        }
+    }
+
+    public void resetScores(View view) {
+        mScore1 = 0;
+        mScoreText1.setText(String.valueOf(mScore1));
+        mScore2 = 0;
+        mScoreText2.setText(String.valueOf(mScore2));
+
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
+
+    public void cancelLastAction(View view) {
+        mScore2 = mScore2Before;
+        mScore1 = mScore1Before;
+        mScoreText1.setText(String.valueOf(mScore1));
+        mScoreText2.setText(String.valueOf(mScore2));
+        mCancelBtn.setEnabled(false);
+    }
+
+    public void changeScore(int team, int score) {
+        mScore1Before = mScore1;
+        mScore2Before = mScore2;
+        mCancelBtn.setEnabled(true);
+
+        switch (team) {
+            case 1:
+                mScore1 += score;
+                mScoreText1.setText(String.valueOf(mScore1));
+                break;
+            case 2:
+                mScore2 += score;
                 mScoreText2.setText(String.valueOf(mScore2));
                 break;
         }
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putInt(STATE_SCORE_1, mScore1);
+        editor.putInt(STATE_SCORE_2, mScore2);
+        editor.putInt(STATE_SCORE_1_BEFORE, mScore1Before);
+        editor.putInt(STATE_SCORE_2_BEFORE, mScore2Before);
+        editor.putString(STATE_NAME_1, mTeamName1);
+        editor.putString(STATE_NAME_2, mTeamName2);
+        editor.apply();
     }
 }
