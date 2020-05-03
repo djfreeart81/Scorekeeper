@@ -30,10 +30,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.guillaumegonnet.scorekeeperV2.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_scores"
+        android:name="com.guillaumegonnet.scorekeeperV2.ui.scores.ScoresFragment"
+        android:label="@string/menu_scores"
+        tools:layout="@layout/fragment_scores" />
 
     <fragment
         android:id="@+id/nav_slideshow"
