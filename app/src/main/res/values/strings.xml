@@ -24,4 +24,12 @@
     <string name="zero">0</string>
     <string name="team_2">Team 2</string>
     <string name="cancel_last_btn">Cancel last</string>
+    <string name="menu_select_games">Select Game</string>
+
+    //for billard spinner
+    <string-array name="billard_array">
+        <item>Snooker</item>
+        <item>8-Ball</item>
+        <item>9-Ball</item>
+    </string-array>
 </resources>

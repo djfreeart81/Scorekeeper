@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.guillaumegonnet.scorekeeperV2.R;
+import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
 
 public class ScoresFragment extends Fragment implements View.OnClickListener {
 
@@ -51,13 +52,14 @@ public class ScoresFragment extends Fragment implements View.OnClickListener {
 
         mPreferences = getActivity().getSharedPreferences(sharedPrefFile, getActivity().MODE_PRIVATE);
 
+
         if (mPreferences != null) {
             mScore1 = mPreferences.getInt(STATE_SCORE_1, 0);
             mScore2 = mPreferences.getInt(STATE_SCORE_2, 0);
             mScore1Before = mPreferences.getInt(STATE_SCORE_1_BEFORE, 0);
             mScore2Before = mPreferences.getInt(STATE_SCORE_2_BEFORE, 0);
-            mTeamName1 = mPreferences.getString(STATE_NAME_1, getString(R.string.team_1));
-            mTeamName2 = mPreferences.getString(STATE_NAME_2, getString(R.string.team_2));
+            mTeamName1 = mPreferences.getString(SelectGameFragment.BUNDLE_KEY_TEAM_1, getString(R.string.team_1));
+            mTeamName2 = mPreferences.getString(SelectGameFragment.BUNDLE_KEY_TEAM_2, getString(R.string.team_2));
 
             mScoreText1.setText(String.valueOf(mScore1));
             mScoreText2.setText(String.valueOf(mScore2));
@@ -238,8 +240,6 @@ public class ScoresFragment extends Fragment implements View.OnClickListener {
         editor.putInt(STATE_SCORE_2, mScore2);
         editor.putInt(STATE_SCORE_1_BEFORE, mScore1Before);
         editor.putInt(STATE_SCORE_2_BEFORE, mScore2Before);
-        editor.putString(STATE_NAME_1, mTeamName1);
-        editor.putString(STATE_NAME_2, mTeamName2);
         editor.apply();
     }
 }
