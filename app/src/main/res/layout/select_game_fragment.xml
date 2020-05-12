@@ -59,11 +59,30 @@
         android:layout_below="@id/select_billard"
         android:layout_marginTop="@dimen/nav_header_vertical_spacing" />
 
+    <TextView
+        android:id="@+id/raceto_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/billard_spinner"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+        android:text="Race to: "
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+    <EditText
+        android:id="@+id/raceto_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/raceto_view"
+        android:layout_toRightOf="@id/raceto_view"
+        android:hint="3"
+        android:inputType="number"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
     <ImageButton
         android:id="@+id/play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/billard_spinner"
+        android:layout_below="@id/raceto_view"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/nav_header_vertical_spacing"
         android:src="@drawable/ic_play_btn" />

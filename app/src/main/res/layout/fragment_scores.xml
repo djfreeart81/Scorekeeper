@@ -1,173 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/white"
     tools:context=".ui.scores.ScoresFragment">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-
         android:layout_weight="1">
-
-        <ImageButton
-            android:id="@+id/decreaseTeam1By1"
-            style="@style/MinusButtons"
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true" />
-
-        <Button
-            android:id="@+id/decreaseTeam1By2"
-            android:layout_width="@dimen/subButton_size"
-            android:layout_height="@dimen/subButton_size"
-            android:layout_below="@+id/decreaseTeam1By1"
-            android:layout_marginTop="8dp"
-            android:text="2" />
-
-        <Button
-            android:id="@+id/decreaseTeam1By3"
-            android:layout_width="@dimen/subButton_size"
-            android:layout_height="@dimen/subButton_size"
-            android:layout_alignBottom="@id/decreaseTeam1By2"
-            android:layout_toRightOf="@+id/decreaseTeam1By2"
-            android:text="3" />
-
-        <Button
-            android:id="@+id/decreaseTeam1By4"
-            android:layout_width="@dimen/subButton_size"
-            android:layout_height="@dimen/subButton_size"
-            android:layout_alignBottom="@id/decreaseTeam1By2"
-            android:layout_toRightOf="@+id/decreaseTeam1By3"
-            android:text="4" />
-
-        <Button
-            android:id="@+id/decreaseTeam1By5"
-            android:layout_width="@dimen/subButton_size"
-            android:layout_height="@dimen/subButton_size"
-            android:layout_below="@id/decreaseTeam1By2"
-            android:text="5" />
-
-        <Button
-            android:id="@+id/decreaseTeam1By6"
-            android:layout_width="@dimen/subButton_size"
-            android:layout_height="@dimen/subButton_size"
-            android:layout_alignBottom="@id/decreaseTeam1By5"
-            android:layout_toRightOf="@id/decreaseTeam1By5"
-            android:text="6" />
-
-        <Button
-            android:id="@+id/decreaseTeam1By7"
-            android:layout_width="@dimen/subButton_size"
-            android:layout_height="@dimen/subButton_size"
-            android:layout_alignBottom="@id/decreaseTeam1By5"
-            android:layout_toRightOf="@id/decreaseTeam1By6"
-            android:text="7" />
 
         <TextView
             android:id="@+id/team1"
             style="@style/TeamText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/team_1" />
+            android:text="@string/team_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/score1"
-            style="@style/ScoreText"
+            android:id="@+id/scoreMatch1"
+            style="@style/ScoreMatchText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="@string/zero" />
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/zero"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/team1" />
 
-        <ImageButton
-            android:id="@+id/increaseTeam1By1"
-            style="@style/PlusButtons"
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
+        <LinearLayout
+            android:id="@+id/gameTeam1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scoreMatch1">
 
-        <Button
-            android:id="@+id/increaseTeam1By2"
-            android:layout_width="@dimen/subButton_size"
-            android:layout_height="@dimen/subButton_size"
-            android:layout_below="@+id/increaseTeam1By1"
-            android:layout_marginTop="8dp"
-            android:layout_toLeftOf="@+id/increaseTeam1By3"
-            android:text="2" />
+            <ImageButton
+                android:id="@+id/decreaseTeam1By1"
+                style="@style/MinusButtons"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size" />
 
-        <Button
-            android:id="@+id/increaseTeam1By3"
-            android:layout_width="@dimen/subButton_size"
-            android:layout_height="@dimen/subButton_size"
-            android:layout_alignBottom="@id/increaseTeam1By4"
-            android:layout_toLeftOf="@+id/increaseTeam1By4"
-            android:text="3" />
+            <TextView
+                android:id="@+id/scoreGame1"
+                style="@style/ScoreGameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/zero" />
 
-        <Button
-            android:id="@+id/increaseTeam1By4"
-            android:layout_width="@dimen/subButton_size"
-            android:layout_height="@dimen/subButton_size"
-            android:layout_alignBottom="@id/increaseTeam1By2"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="8dp"
-            android:text="4" />
+            <ImageButton
+                android:id="@+id/increaseTeam1By1"
+                style="@style/PlusButtons"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size" />
 
-        <Button
-            android:id="@+id/increaseTeam1By5"
-            android:layout_width="@dimen/subButton_size"
-            android:layout_height="@dimen/subButton_size"
-            android:layout_alignBottom="@id/increaseTeam1By7"
-            android:layout_toLeftOf="@id/increaseTeam1By6"
-            android:text="5" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/increaseTeam1By6"
-            android:layout_width="@dimen/subButton_size"
-            android:layout_height="@dimen/subButton_size"
-            android:layout_alignBottom="@id/increaseTeam1By7"
-            android:layout_toLeftOf="@id/increaseTeam1By7"
-            android:text="6" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gameTeam1">
 
-        <Button
-            android:id="@+id/increaseTeam1By7"
-            android:layout_width="@dimen/subButton_size"
-            android:layout_height="@dimen/subButton_size"
-            android:layout_below="@id/increaseTeam1By4"
-            android:layout_alignParentRight="true"
-            android:text="7" />
+            <Button
+                android:id="@+id/decreaseTeam1By2"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size"
+                android:layout_marginTop="8dp"
+                android:text="2" />
 
-    </RelativeLayout>
+            <Button
+                android:id="@+id/decreaseTeam1By3"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size"
+                android:layout_alignBottom="@id/decreaseTeam1By2"
+                android:layout_toRightOf="@+id/decreaseTeam1By2"
+                android:text="3" />
 
-    <RelativeLayout
+            <Button
+                android:id="@+id/decreaseTeam1By4"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size"
+                android:layout_alignBottom="@id/decreaseTeam1By2"
+                android:layout_toRightOf="@+id/decreaseTeam1By3"
+                android:text="4" />
+
+            <Button
+                android:id="@+id/decreaseTeam1By5"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size"
+                android:layout_below="@id/decreaseTeam1By2"
+                android:text="5" />
+
+            <Button
+                android:id="@+id/decreaseTeam1By6"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size"
+                android:layout_alignBottom="@id/decreaseTeam1By5"
+                android:layout_toRightOf="@id/decreaseTeam1By5"
+                android:text="6" />
+
+            <Button
+                android:id="@+id/decreaseTeam1By7"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size"
+                android:layout_alignBottom="@id/decreaseTeam1By5"
+                android:layout_toRightOf="@id/decreaseTeam1By6"
+                android:text="7" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gameTeam1">
+
+            <Button
+                android:id="@+id/increaseTeam1By2"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size"
+                android:layout_marginTop="8dp"
+                android:layout_toLeftOf="@+id/increaseTeam1By3"
+                android:text="2" />
+
+            <Button
+                android:id="@+id/increaseTeam1By3"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size"
+                android:layout_alignBottom="@id/increaseTeam1By4"
+                android:layout_toLeftOf="@+id/increaseTeam1By4"
+                android:text="3" />
+
+            <Button
+                android:id="@+id/increaseTeam1By4"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size"
+                android:layout_alignBottom="@id/increaseTeam1By2"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="8dp"
+                android:text="4" />
+
+            <Button
+                android:id="@+id/increaseTeam1By5"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size"
+                android:layout_alignBottom="@id/increaseTeam1By7"
+                android:layout_toLeftOf="@id/increaseTeam1By6"
+                android:text="5" />
+
+            <Button
+                android:id="@+id/increaseTeam1By6"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size"
+                android:layout_alignBottom="@id/increaseTeam1By7"
+                android:layout_toLeftOf="@id/increaseTeam1By7"
+                android:text="6" />
+
+            <Button
+                android:id="@+id/increaseTeam1By7"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size"
+                android:layout_below="@id/increaseTeam1By4"
+                android:layout_alignParentRight="true"
+                android:text="7" />
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <ImageButton
-            android:id="@+id/decreaseTeam2By1"
-            style="@style/MinusButtons"
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true" />
+        <TextView
+            android:id="@+id/team2"
+            style="@style/TeamText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/team_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/scoreMatch2"
+            style="@style/ScoreMatchText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/zero"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/team2" />
+
+        <LinearLayout
+            android:id="@+id/gameTeam2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scoreMatch2">
+
+            <ImageButton
+                android:id="@+id/decreaseTeam2By1"
+                style="@style/MinusButtons"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size" />
+
+            <TextView
+                android:id="@+id/scoreGame2"
+                style="@style/ScoreGameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/zero" />
+
+            <ImageButton
+                android:id="@+id/increaseTeam2By1"
+                style="@style/PlusButtons"
+                android:layout_width="@dimen/subButton_size"
+                android:layout_height="@dimen/subButton_size" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gameTeam2">
 
         <Button
             android:id="@+id/decreaseTeam2By2"
             android:layout_width="@dimen/subButton_size"
             android:layout_height="@dimen/subButton_size"
-            android:layout_below="@+id/decreaseTeam2By1"
             android:layout_marginTop="8dp"
             android:text="2" />
 
@@ -210,38 +288,18 @@
             android:layout_toRightOf="@id/decreaseTeam2By6"
             android:text="7" />
 
-        <TextView
-            android:id="@+id/team2"
-            style="@style/TeamText"
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/team_2" />
-
-        <TextView
-            android:id="@+id/score2"
-            style="@style/ScoreText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="@string/zero" />
-
-        <ImageButton
-            android:id="@+id/increaseTeam2By1"
-            style="@style/PlusButtons"
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gameTeam2">
 
         <Button
             android:id="@+id/increaseTeam2By2"
             android:layout_width="@dimen/subButton_size"
             android:layout_height="@dimen/subButton_size"
-            android:layout_below="@+id/increaseTeam2By1"
             android:layout_marginTop="8dp"
             android:layout_toLeftOf="@+id/increaseTeam2By3"
             android:text="2" />
@@ -285,8 +343,9 @@
             android:layout_below="@id/increaseTeam2By4"
             android:layout_alignParentRight="true"
             android:text="7" />
+        </RelativeLayout>
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -295,11 +354,11 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/reset_btn"
+            android:id="@+id/endGame_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="48dp"
-            android:text="@string/reset_btn" />
+            android:text="@string/endGame_btn" />
 
         <Button
             android:id="@+id/cancel_btn"

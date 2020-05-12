@@ -11,38 +11,16 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
 
-        <action
-            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/nav_home_second" />
     </fragment>
-    <fragment
-        android:id="@+id/nav_home_second"
-        android:name="com.guillaumegonnet.scorekeeperV2.ui.home.HomeSecondFragment"
-        android:label="@string/home_second"
-        tools:layout="@layout/fragment_home_second">
-        <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/nav_home" />
-
-        <argument
-            android:name="myArg"
-            app:argType="string" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_scores"
-        android:name="com.guillaumegonnet.scorekeeperV2.ui.scores.ScoresFragment"
-        android:label="@string/menu_scores"
-        tools:layout="@layout/fragment_scores" />
-    <fragment
-        android:id="@+id/nav_billard"
-        android:name="com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment"
-        android:label="@string/menu_select_games"
-        tools:layout="@layout/select_game_fragment" />
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.guillaumegonnet.scorekeeperV2.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/scoresFragment"
+        android:name="com.guillaumegonnet.scorekeeperV2.ui.scores.ScoresFragment"
+        android:label="fragment_scores"
+        tools:layout="@layout/fragment_scores" />
 </navigation>

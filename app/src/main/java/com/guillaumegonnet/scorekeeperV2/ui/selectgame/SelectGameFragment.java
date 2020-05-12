@@ -22,22 +22,30 @@ import androidx.lifecycle.ViewModelProviders;
 import com.guillaumegonnet.scorekeeperV2.R;
 import com.guillaumegonnet.scorekeeperV2.ui.scores.ScoresFragment;
 
+import static java.lang.Integer.valueOf;
+
 public class SelectGameFragment extends Fragment {
 
     public static final String BUNDLE_KEY_TEAM_1 = "Team 1";
     public static final String BUNDLE_KEY_TEAM_2 = "Team 2";
     public static final String BUNDLE_KEY_BILLARD = "Billard Type";
+    public static final String BUNDLE_KEY_RACE_TO = "Race To";
+    public static final String BUNDLE_KEY_INIT = "New Match";
     static final String STATE_SCORE_1 = "Team 1 Score";
     static final String STATE_SCORE_2 = "Team 2 Score";
-    public String mBillardType;
+
     private SelectGameViewModel mViewModel;
     private EditText mTeam1View;
     private EditText mTeam2View;
     private String mTeam1;
     private String mTeam2;
+    private int mRaceTo;
+    private EditText mRaceToView;
+    private String mBillardType;
 
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.guillaumegonnet.scorekeeper";
+
 
     public static SelectGameFragment newInstance() {
         return new SelectGameFragment();
@@ -50,6 +58,7 @@ public class SelectGameFragment extends Fragment {
 
         mTeam1View = root.findViewById(R.id.team1_edit);
         mTeam2View = root.findViewById(R.id.team2_edit);
+        mRaceToView = root.findViewById(R.id.raceto_edit);
 
         mPreferences = getActivity().getSharedPreferences(sharedPrefFile, getActivity().MODE_PRIVATE);
 
@@ -63,7 +72,7 @@ public class SelectGameFragment extends Fragment {
             }
         }
 
-        Spinner spinner = root.findViewById(R.id.billard_spinner);
+        final Spinner spinner = root.findViewById(R.id.billard_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.billard_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -80,15 +89,17 @@ public class SelectGameFragment extends Fragment {
 
                 mTeam1 = mTeam1View.getText().toString();
                 mTeam2 = mTeam2View.getText().toString();
-
-                SharedPreferences.Editor editor = mPreferences.edit();
-                editor.putString(BUNDLE_KEY_TEAM_1, mTeam1);
-                editor.putString(BUNDLE_KEY_TEAM_2, mTeam2);
-                editor.putInt(STATE_SCORE_1, 0);
-                editor.putInt(STATE_SCORE_2, 0);
-                editor.apply();
+                mRaceTo = valueOf(mRaceToView.getText().toString());
+                mBillardType = spinner.getSelectedItem().toString();
 
                 Fragment scoresFragment = new ScoresFragment();
+                Bundle arguments = new Bundle();
+                arguments.putString(BUNDLE_KEY_TEAM_1, mTeam1);
+                arguments.putString(BUNDLE_KEY_TEAM_2, mTeam2);
+                arguments.putInt(BUNDLE_KEY_RACE_TO, mRaceTo);
+                arguments.putString(BUNDLE_KEY_BILLARD, mBillardType);
+                arguments.putString(BUNDLE_KEY_INIT, "New Match");
+                scoresFragment.setArguments(arguments);
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, scoresFragment);
                 transaction.commit();

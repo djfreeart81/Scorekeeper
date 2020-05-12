@@ -33,8 +33,12 @@
 
     </style>
 
-    <style name="ScoreText">
+    <style name="ScoreMatchText">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Display3</item>
+    </style>
+
+    <style name="ScoreGameText">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
     </style>
 
     <style name="TeamText">
