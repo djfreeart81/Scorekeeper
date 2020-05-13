@@ -69,7 +69,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener {
 
         mPreferences = getActivity().getSharedPreferences(sharedPrefFile, getActivity().MODE_PRIVATE);
 
-        if (getArguments().containsKey(BUNDLE_KEY_INIT)) {
+        if (getArguments() != null && getArguments().containsKey(BUNDLE_KEY_INIT)) {
             mTeamName1 = getArguments().getString(BUNDLE_KEY_TEAM_1);
             mTeamName2 = getArguments().getString(BUNDLE_KEY_TEAM_2);
             mRaceTo = getArguments().getInt(BUNDLE_KEY_RACE_TO, 0);

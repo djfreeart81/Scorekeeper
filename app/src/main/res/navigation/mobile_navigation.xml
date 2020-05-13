@@ -19,7 +19,7 @@
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
-        android:id="@+id/scoresFragment"
+        android:id="@+id/nav_scores"
         android:name="com.guillaumegonnet.scorekeeperV2.ui.scores.ScoresFragment"
         android:label="fragment_scores"
         tools:layout="@layout/fragment_scores" />

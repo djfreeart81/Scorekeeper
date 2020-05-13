@@ -12,19 +12,6 @@ public class Game extends Match {
         super(sportName, team1, team2, scoreMax);
     }
 
-    public void increaseScore(String team, int points) {
-        if (team == team1) {
-            mScoreGameTeam1 += points;
-        }
-        if (team == team2) {
-            mScoreGameTeam2 += points;
-        }
 
-        if (points == 1 || points == -1) {
-            mRemainingPoints -= points;
-        } else {
-            mRemainingPoints += points % Math.abs(points) * 7;
-        }
-    }
 
 }

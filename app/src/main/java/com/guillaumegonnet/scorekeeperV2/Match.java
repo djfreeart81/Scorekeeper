@@ -9,14 +9,17 @@ public class Match {
     public String team2;
     public int scoreMatchTeam1;
     public int scoreMatchTeam2;
-    public int scoreMax;
+    public int mScoreGameTeam1;
+    public int mScoreGameTeam2;
+    public int mRaceTo;
     public boolean isMatchStarted;
+    public int mRemainingPoints = 147;
 
-    public Match(String sportName, String team1, String team2, int scoreMax) {
+    public Match(String sportName, String team1, String team2, int mRaceTo) {
         this.sportName = sportName;
         this.team1 = team1;
         this.team2 = team2;
-        this.scoreMax = scoreMax;
+        this.mRaceTo = mRaceTo;
     }
 
     public int getScoreMatchTeam1() {
@@ -33,5 +36,20 @@ public class Match {
 
     public void setScoreMatchTeam2(int scoreMatchTeam2) {
         this.scoreMatchTeam2 = scoreMatchTeam2;
+    }
+
+    public void increaseScore(String team, int points) {
+        if (team == team1) {
+            mScoreGameTeam1 += points;
+        }
+        if (team == team2) {
+            mScoreGameTeam2 += points;
+        }
+
+        if (points == 1 || points == -1) {
+            mRemainingPoints -= points;
+        } else {
+            mRemainingPoints += points % Math.abs(points) * 7;
+        }
     }
 }
