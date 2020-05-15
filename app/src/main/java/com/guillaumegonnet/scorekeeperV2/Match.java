@@ -22,10 +22,17 @@ public class Match {
         this.mRaceTo = mRaceTo;
     }
 
+    public String getNameTeam1() {
+        return team1;
+    }
+
+    public String getNameTeam2() {
+        return team2;
+    }
+
     public int getScoreMatchTeam1() {
         return scoreMatchTeam1;
     }
-
     public void setScoreMatchTeam1(int scoreMatchTeam1) {
         this.scoreMatchTeam1 = scoreMatchTeam1;
     }
@@ -33,9 +40,12 @@ public class Match {
     public int getScoreMatchTeam2() {
         return scoreMatchTeam2;
     }
-
     public void setScoreMatchTeam2(int scoreMatchTeam2) {
         this.scoreMatchTeam2 = scoreMatchTeam2;
+    }
+
+    public int getRaceTo() {
+        return mRaceTo;
     }
 
     public void increaseScore(String team, int points) {

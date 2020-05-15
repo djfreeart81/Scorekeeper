@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/raceto_view"
         android:layout_toRightOf="@id/raceto_view"
-        android:hint="3"
+        android:texte="3"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 

@@ -2,6 +2,7 @@ package com.guillaumegonnet.scorekeeperV2.ui.scores;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,34 +10,38 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.guillaumegonnet.scorekeeperV2.Game;
+import com.guillaumegonnet.scorekeeperV2.MainActivity;
 import com.guillaumegonnet.scorekeeperV2.Match;
 import com.guillaumegonnet.scorekeeperV2.R;
 import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
 
-public class ScoresFragment extends Fragment implements View.OnClickListener {
+public class ScoresFragment extends Fragment implements View.OnClickListener, MainActivity.ListenFromActivity {
 
     public static final String BUNDLE_KEY_TEAM_1 = "Team 1";
     public static final String BUNDLE_KEY_TEAM_2 = "Team 2";
     public static final String BUNDLE_KEY_BILLARD = "Billard Type";
     public static final String BUNDLE_KEY_RACE_TO = "Race To";
     public static final String BUNDLE_KEY_INIT = "New Match";
-    static final String STATE_SCORE_GAME_1_BEFORE = "Team 1 Score Before";
-    static final String STATE_SCORE_GAME_2_BEFORE = "Team 2 Score Before";
-    static final String STATE_SCORE_GAME_1 = "Team 1 Game Score";
-    static final String STATE_SCORE_MATCH_1 = "Team 1 Match Score";
-    static final String STATE_SCORE_GAME_2 = "Team 2 Score";
-    static final String STATE_SCORE_MATCH_2 = "Team 2 Match Score";
+    public static final String STATE_SCORE_GAME_1_BEFORE = "Team 1 Score Before";
+    public static final String STATE_SCORE_GAME_2_BEFORE = "Team 2 Score Before";
+    public static final String STATE_SCORE_GAME_1 = "Team 1 Game Score";
+    public static final String STATE_SCORE_MATCH_1 = "Team 1 Match Score";
+    public static final String STATE_SCORE_GAME_2 = "Team 2 Score";
+    public static final String STATE_SCORE_MATCH_2 = "Team 2 Match Score";
+    public static final String STATE_SCORE_BILLARD_TYPE = "Billard Type";
+    public static final String STATE_TEAM_1 = "Team 1";
+    public static final String STATE_TEAM_2 = "Team 2";
 
     private ScoresViewModel mScoresViewModel;
     private int mScoreGame1;
-    private int mScoreMatch1;
+    public int mScoreMatch1;
     private int mScoreGame1Before; //store the last score
     private int mScoreGame2;
-    private int mScoreMatch2;
+    public int mScoreMatch2;
     private int mScoreGame2Before; //store the last score
     private int mRaceTo;
     private String mBillardType;
@@ -49,9 +54,17 @@ public class ScoresFragment extends Fragment implements View.OnClickListener {
     private TextView mTeamNameText1;
     private TextView mTeamNameText2;
     private Button mCancelBtn;
+    private Match match;
 
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.guillaumegonnet.scorekeeper";
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((MainActivity) getActivity()).setActivityListener(ScoresFragment.this);
+
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -69,16 +82,15 @@ public class ScoresFragment extends Fragment implements View.OnClickListener {
 
         mPreferences = getActivity().getSharedPreferences(sharedPrefFile, getActivity().MODE_PRIVATE);
 
-        if (getArguments() != null && getArguments().containsKey(BUNDLE_KEY_INIT)) {
-            mTeamName1 = getArguments().getString(BUNDLE_KEY_TEAM_1);
-            mTeamName2 = getArguments().getString(BUNDLE_KEY_TEAM_2);
-            mRaceTo = getArguments().getInt(BUNDLE_KEY_RACE_TO, 0);
-            mBillardType = getArguments().getString(BUNDLE_KEY_BILLARD);
 
-            Match match = new Match(mBillardType, mTeamName1, mTeamName2, mRaceTo);
-            Game game = new Game(mBillardType, mTeamName1, mTeamName2, mRaceTo);
-
-        } else {
+        // if (getArguments() != null && getArguments().containsKey(BUNDLE_KEY_INIT)) {
+        //     mTeamName1 = getArguments().getString(BUNDLE_KEY_TEAM_1);
+        //     mTeamName2 = getArguments().getString(BUNDLE_KEY_TEAM_2);
+        //     mRaceTo = getArguments().getInt(BUNDLE_KEY_RACE_TO, 0);
+        //     mBillardType = getArguments().getString(BUNDLE_KEY_BILLARD);
+        //     getArguments().remove(BUNDLE_KEY_INIT);
+        //
+        // } else {
 
             if (mPreferences != null) {
                 mScoreGame1 = mPreferences.getInt(STATE_SCORE_GAME_1, 0);
@@ -89,8 +101,10 @@ public class ScoresFragment extends Fragment implements View.OnClickListener {
                 mScoreMatch2 = mPreferences.getInt(STATE_SCORE_MATCH_2, 0);
                 mTeamName1 = mPreferences.getString(SelectGameFragment.BUNDLE_KEY_TEAM_1, getString(R.string.team_1));
                 mTeamName2 = mPreferences.getString(SelectGameFragment.BUNDLE_KEY_TEAM_2, getString(R.string.team_2));
+                mBillardType = mPreferences.getString(STATE_SCORE_BILLARD_TYPE, "Billard");
             }
-        }
+        // }
+        Match match = new Match(mBillardType, mTeamName1, mTeamName2, mRaceTo);
 
         mScoreMatchText1.setText(String.valueOf(mScoreMatch1));
         mScoreMatchText2.setText(String.valueOf(mScoreMatch2));
@@ -125,6 +139,8 @@ public class ScoresFragment extends Fragment implements View.OnClickListener {
                 textView.setText(s);
             }
         });*/
+
+        Log.d("test match", "score 1" + match.getScoreMatchTeam1());
 
         return root;
     }
@@ -228,19 +244,39 @@ public class ScoresFragment extends Fragment implements View.OnClickListener {
     }
 
     public void endGame(View view) {
-
+        EndGameDialogFragment dialog = new EndGameDialogFragment();
+        dialog.show(getParentFragmentManager(), "EndGameDialogFragment");
     }
 
-    public void resetScores(View view) {
-        mScoreGame1 = 0;
-        mScoreMatchText1.setText(String.valueOf(mScoreGame1));
-        mScoreGame2 = 0;
-        mScoreMatchText2.setText(String.valueOf(mScoreGame2));
-
+    // Methods executed on Listener defined in Main Activity for EndGameDialogFragment
+    @Override
+    public void IncreaseScoreMatch1() {
+        mScoreMatch1++;
+        mScoreMatchText1.setText(Integer.toString(mScoreMatch1));
         SharedPreferences.Editor editor = mPreferences.edit();
-        editor.clear();
+        editor.putInt(STATE_SCORE_MATCH_1, mScoreMatch1);
         editor.apply();
     }
+
+    @Override
+    public void IncreaseScoreMatch2() {
+        mScoreMatch2++;
+        mScoreMatchText2.setText(Integer.toString(mScoreMatch2));
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putInt(STATE_SCORE_MATCH_2, mScoreMatch2);
+        editor.apply();
+    }
+
+    // public void resetScores(View view) {
+    //     mScoreGame1 = 0;
+    //     mScoreMatchText1.setText(String.valueOf(mScoreGame1));
+    //     mScoreGame2 = 0;
+    //     mScoreMatchText2.setText(String.valueOf(mScoreGame2));
+    //
+    //     SharedPreferences.Editor editor = mPreferences.edit();
+    //     //TO DO: clear the Game scores
+    //     editor.apply();
+    // }
 
     public void cancelLastAction(View view) {
         mScoreGame2 = mScoreGame2Before;
@@ -278,6 +314,23 @@ public class ScoresFragment extends Fragment implements View.OnClickListener {
         editor.putInt(STATE_SCORE_GAME_2_BEFORE, mScoreGame2Before);
         editor.putInt(STATE_SCORE_MATCH_1, mScoreMatch1);
         editor.putInt(STATE_SCORE_MATCH_2, mScoreMatch2);
+        editor.putString(STATE_SCORE_BILLARD_TYPE, mBillardType);
         editor.apply();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putInt(STATE_SCORE_GAME_1, mScoreGame1);
+        editor.putInt(STATE_SCORE_GAME_2, mScoreGame2);
+        editor.putInt(STATE_SCORE_GAME_1_BEFORE, mScoreGame1Before);
+        editor.putInt(STATE_SCORE_GAME_2_BEFORE, mScoreGame2Before);
+        editor.putInt(STATE_SCORE_MATCH_1, mScoreMatch1);
+        editor.putInt(STATE_SCORE_MATCH_2, mScoreMatch2);
+        editor.putString(STATE_SCORE_BILLARD_TYPE, mBillardType);
+        editor.apply();
+    }
+
+
 }

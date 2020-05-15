@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -17,11 +18,33 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.guillaumegonnet.scorekeeperV2.ui.scores.EndGameDialogFragment;
 import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EndGameDialogFragment.EndGameDialogListener {
 
     private AppBarConfiguration mAppBarConfiguration;
+
+    public ListenFromActivity activityListener;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+
+    //Interface to send back the result of EndGameDialogFragment to ScoresFragment
+    boolean team1Win = false;
+    boolean team2Win = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectGameFragment = new SelectGameFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, selectGameFragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -58,20 +82,27 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        return true;
+    public void setActivityListener(ListenFromActivity activityListener) {
+        this.activityListener = activityListener;
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        if (null != activityListener) {
+            activityListener.IncreaseScoreMatch1();
+        }
     }
 
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        if (null != activityListener) {
+            activityListener.IncreaseScoreMatch2();
+        }
+    }
 
+    public interface ListenFromActivity {
+        void IncreaseScoreMatch1();
+
+        void IncreaseScoreMatch2();
+    }
 }

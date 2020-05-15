@@ -92,16 +92,30 @@ public class SelectGameFragment extends Fragment {
                 mRaceTo = valueOf(mRaceToView.getText().toString());
                 mBillardType = spinner.getSelectedItem().toString();
 
+                SharedPreferences.Editor editor = mPreferences.edit();
+                editor.putInt(ScoresFragment.STATE_SCORE_GAME_1, 0);
+                editor.putInt(ScoresFragment.STATE_SCORE_GAME_2, 0);
+                editor.putInt(ScoresFragment.STATE_SCORE_GAME_1_BEFORE, 0);
+                editor.putInt(ScoresFragment.STATE_SCORE_GAME_2_BEFORE, 0);
+                editor.putInt(ScoresFragment.STATE_SCORE_MATCH_1, 0);
+                editor.putInt(ScoresFragment.STATE_SCORE_MATCH_2, 0);
+                editor.putString(ScoresFragment.STATE_TEAM_1, getString(R.string.team_1));
+                editor.putString(ScoresFragment.STATE_TEAM_2, getString(R.string.team_2));
+                editor.putString(ScoresFragment.STATE_SCORE_BILLARD_TYPE, mBillardType);
+                editor.apply();
+
+
                 Fragment scoresFragment = new ScoresFragment();
-                Bundle arguments = new Bundle();
+                /*Bundle arguments = new Bundle();
                 arguments.putString(BUNDLE_KEY_TEAM_1, mTeam1);
                 arguments.putString(BUNDLE_KEY_TEAM_2, mTeam2);
                 arguments.putInt(BUNDLE_KEY_RACE_TO, mRaceTo);
                 arguments.putString(BUNDLE_KEY_BILLARD, mBillardType);
                 arguments.putString(BUNDLE_KEY_INIT, "New Match");
-                scoresFragment.setArguments(arguments);
+                scoresFragment.setArguments(arguments);*/
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, scoresFragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
