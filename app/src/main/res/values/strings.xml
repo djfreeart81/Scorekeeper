@@ -23,9 +23,11 @@
     <string name="endGame_btn">End Game</string>
     <string name="zero">0</string>
     <string name="team_2">Team 2</string>
-    <string name="cancel_last_btn">Cancel last</string>
+    <string name="cancel_last_btn">Cancel</string>
     <string name="menu_select_games">Select Game</string>
     <string name="dialog_select_team">Select Winning Team</string>
+    <string name="endMatch_btn">End Match</string>
+    <string name="remaining_points">Remaining points : %1$d</string>
 
     //for billard spinner
     <string-array name="billard_array">

@@ -102,6 +102,7 @@ public class SelectGameFragment extends Fragment {
                 editor.putString(ScoresFragment.STATE_TEAM_1, getString(R.string.team_1));
                 editor.putString(ScoresFragment.STATE_TEAM_2, getString(R.string.team_2));
                 editor.putString(ScoresFragment.STATE_SCORE_BILLARD_TYPE, mBillardType);
+                editor.remove(ScoresFragment.STATE_REMAINING_POINTS);
                 editor.apply();
 
 

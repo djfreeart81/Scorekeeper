@@ -35,15 +35,17 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     public static final String STATE_SCORE_BILLARD_TYPE = "Billard Type";
     public static final String STATE_TEAM_1 = "Team 1";
     public static final String STATE_TEAM_2 = "Team 2";
+    public static final String STATE_REMAINING_POINTS = "Remaining Points";
 
     private ScoresViewModel mScoresViewModel;
     private int mScoreGame1;
-    public int mScoreMatch1;
+    private int mScoreMatch1;
     private int mScoreGame1Before; //store the last score
     private int mScoreGame2;
-    public int mScoreMatch2;
+    private int mScoreMatch2;
     private int mScoreGame2Before; //store the last score
     private int mRaceTo;
+    private int mRemainingPoints = 147;
     private String mBillardType;
     private String mTeamName1;
     private String mTeamName2;
@@ -53,6 +55,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     private TextView mScoreGameText2;
     private TextView mTeamNameText1;
     private TextView mTeamNameText2;
+    private TextView mRemainingPointsText;
     private Button mCancelBtn;
     private Match match;
 
@@ -79,6 +82,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         mTeamNameText1 = root.findViewById(R.id.team1);
         mTeamNameText2 = root.findViewById(R.id.team2);
         mCancelBtn = root.findViewById(R.id.cancel_btn);
+        mRemainingPointsText = root.findViewById(R.id.remaining_points);
 
         mPreferences = getActivity().getSharedPreferences(sharedPrefFile, getActivity().MODE_PRIVATE);
 
@@ -102,6 +106,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
                 mTeamName1 = mPreferences.getString(SelectGameFragment.BUNDLE_KEY_TEAM_1, getString(R.string.team_1));
                 mTeamName2 = mPreferences.getString(SelectGameFragment.BUNDLE_KEY_TEAM_2, getString(R.string.team_2));
                 mBillardType = mPreferences.getString(STATE_SCORE_BILLARD_TYPE, "Billard");
+                mRemainingPoints = mPreferences.getInt(STATE_REMAINING_POINTS, 147);
             }
         // }
         Match match = new Match(mBillardType, mTeamName1, mTeamName2, mRaceTo);
@@ -112,6 +117,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         mScoreGameText2.setText(String.valueOf(mScoreGame2));
         mTeamNameText1.setText(mTeamName1);
         mTeamNameText2.setText(mTeamName2);
+        mRemainingPointsText.setText(getString(R.string.remaining_points, mRemainingPoints));
 
         // Create listeners for - buttons
         for (int i = 1; i < 8; i++) {
@@ -267,70 +273,52 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         editor.apply();
     }
 
-    // public void resetScores(View view) {
-    //     mScoreGame1 = 0;
-    //     mScoreMatchText1.setText(String.valueOf(mScoreGame1));
-    //     mScoreGame2 = 0;
-    //     mScoreMatchText2.setText(String.valueOf(mScoreGame2));
-    //
-    //     SharedPreferences.Editor editor = mPreferences.edit();
-    //     //TO DO: clear the Game scores
-    //     editor.apply();
-    // }
-
     public void cancelLastAction(View view) {
         mScoreGame2 = mScoreGame2Before;
         mScoreGame1 = mScoreGame1Before;
         mScoreGameText1.setText(String.valueOf(mScoreGame1));
         mScoreGameText2.setText(String.valueOf(mScoreGame2));
         mCancelBtn.setEnabled(false);
+        savePreferences();
     }
 
-    public void changeScore(int team, int score) {
+    public void changeScore(int team, int point) {
         mScoreGame1Before = mScoreGame1;
         mScoreGame2Before = mScoreGame2;
         mCancelBtn.setEnabled(true);
 
         switch (team) {
             case 1:
-                mScoreGame1 += score;
+                mScoreGame1 += point;
                 mScoreGameText1.setText(String.valueOf(mScoreGame1));
+                if (Math.abs(point) == 1) {
+                    mRemainingPoints -= point;
+                } else {
+                    mRemainingPoints -= 7; //max point should be removed when color ball scored
+                }
                 break;
             case 2:
-                mScoreGame2 += score;
+                mScoreGame2 += point;
                 mScoreGameText2.setText(String.valueOf(mScoreGame2));
+                if (Math.abs(point) == 1) {
+                    mRemainingPoints -= point;
+                } else {
+                    mRemainingPoints -= 7; //max point should be removed when color ball scored
+                }
                 break;
         }
-
+        mRemainingPointsText.setText(getString(R.string.remaining_points, mRemainingPoints));
+        savePreferences();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
+    public void savePreferences() {
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putInt(STATE_SCORE_GAME_1, mScoreGame1);
         editor.putInt(STATE_SCORE_GAME_2, mScoreGame2);
         editor.putInt(STATE_SCORE_GAME_1_BEFORE, mScoreGame1Before);
         editor.putInt(STATE_SCORE_GAME_2_BEFORE, mScoreGame2Before);
-        editor.putInt(STATE_SCORE_MATCH_1, mScoreMatch1);
-        editor.putInt(STATE_SCORE_MATCH_2, mScoreMatch2);
-        editor.putString(STATE_SCORE_BILLARD_TYPE, mBillardType);
+        editor.putInt(STATE_REMAINING_POINTS, mRemainingPoints);
         editor.apply();
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putInt(STATE_SCORE_GAME_1, mScoreGame1);
-        editor.putInt(STATE_SCORE_GAME_2, mScoreGame2);
-        editor.putInt(STATE_SCORE_GAME_1_BEFORE, mScoreGame1Before);
-        editor.putInt(STATE_SCORE_GAME_2_BEFORE, mScoreGame2Before);
-        editor.putInt(STATE_SCORE_MATCH_1, mScoreMatch1);
-        editor.putInt(STATE_SCORE_MATCH_2, mScoreMatch2);
-        editor.putString(STATE_SCORE_BILLARD_TYPE, mBillardType);
-        editor.apply();
-    }
-
 
 }
