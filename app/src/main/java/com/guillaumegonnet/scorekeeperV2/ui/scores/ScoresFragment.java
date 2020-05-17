@@ -2,7 +2,6 @@ package com.guillaumegonnet.scorekeeperV2.ui.scores;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import com.guillaumegonnet.scorekeeperV2.Match;
 import com.guillaumegonnet.scorekeeperV2.R;
 import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
 
-import java.util.LinkedList;
+import java.util.LinkedHashMap;
 
 public class ScoresFragment extends Fragment implements View.OnClickListener, MainActivity.ListenFromActivity {
 
@@ -48,7 +47,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     private int mScoreMatch2;
     private int mScoreGame2Before; //store the last score
     private int mRaceTo;
-    private int mRemainingPoints = 147;
+    private int mRemainingPoints = 99;
     private String mBillardType;
     private String mTeamName1;
     private String mTeamName2;
@@ -61,7 +60,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     private TextView mRemainingPointsText;
     private Button mCancelBtn;
     private Match match;
-    private LinkedList pointslist = new LinkedList();
+    private LinkedHashMap<Integer, Integer> mBallScoredMap = new LinkedHashMap<>(); //will store balls scored with K=Team# & V=Score
 
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.guillaumegonnet.scorekeeper";
@@ -110,7 +109,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
                 mTeamName1 = mPreferences.getString(SelectGameFragment.BUNDLE_KEY_TEAM_1, getString(R.string.team_1));
                 mTeamName2 = mPreferences.getString(SelectGameFragment.BUNDLE_KEY_TEAM_2, getString(R.string.team_2));
                 mBillardType = mPreferences.getString(STATE_SCORE_BILLARD_TYPE, "Billard");
-                mRemainingPoints = mPreferences.getInt(STATE_REMAINING_POINTS, 147);
+                mRemainingPoints = mPreferences.getInt(STATE_REMAINING_POINTS, 99);
             }
         // }
         Match match = new Match(mBillardType, mTeamName1, mTeamName2, mRaceTo);
@@ -126,7 +125,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         // Create listeners for - buttons
         for (int i = 1; i < 8; i++) {
             for (int j = 1; j < 3; j++) {
-                String buttonId = "decreaseTeam" + j + "By" + i;
+                String buttonId = "faultTeam" + j + "By" + i;
                 int resId = getResources().getIdentifier(buttonId, "id", getActivity().getPackageName());
                 root.findViewById(resId).setOnClickListener(this);
             }
@@ -150,8 +149,6 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
             }
         });*/
 
-        Log.d("test match", "score 1" + match.getScoreMatchTeam1());
-
         return root;
     }
 
@@ -172,7 +169,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
             case R.id.faultTeam1By4:
                 changeScoreFault(1, 4);
                 break;
-            case R.id.decreaseTeam1By5:
+            case R.id.faultTeam1By5:
                 changeScoreFault(1, 5);
                 break;
             case R.id.faultTeam1By6:
@@ -301,6 +298,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     }
 
     public void cancelLastAction(View view) {
+        calculateRemainingPoints(-Math.max(mScoreGame2 - mScoreGame2Before, mScoreGame1 - mScoreGame1Before));
         mScoreGame2 = mScoreGame2Before;
         mScoreGame1 = mScoreGame1Before;
         mScoreGameText1.setText(String.valueOf(mScoreGame1));
@@ -310,6 +308,8 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     }
 
     public void changeScore(int team, int point) {
+        calculateRemainingPoints(point);
+        //save current Score to be able to cancel
         mScoreGame1Before = mScoreGame1;
         mScoreGame2Before = mScoreGame2;
         mCancelBtn.setEnabled(true);
@@ -323,8 +323,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
                 mScoreGame2 += point;
                 mScoreGameText2.setText(String.valueOf(mScoreGame2));
         }
-        calculateRemainingPoints();
-        mRemainingPointsText.setText(getString(R.string.remaining_points, mRemainingPoints));
+        mBallScoredMap.put(team, point);
         savePreferences();
     }
 
@@ -345,8 +344,23 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         savePreferences();
     }
 
-    private void calculateRemainingPoints() {
+    private void calculateRemainingPoints(int point) {
 
+        int previousBallScored = Math.max(mScoreGame1 - mScoreGame1Before, mScoreGame2 - mScoreGame2Before);
+
+        if (point == 1 || point == -1) {
+            if (previousBallScored == 1) {
+                mRemainingPoints -= 7 * Integer.signum(point); //reflect the color ball missed during previous turn
+                mRemainingPoints -= 1 * Integer.signum(point);
+            } else {
+                mRemainingPoints -= 1 * Integer.signum(point);
+            }
+        } else {
+            mRemainingPoints -= 7 * Integer.signum(point);
+        }
+
+        mRemainingPointsText.setText(getString(R.string.remaining_points, mRemainingPoints));
+        savePreferences();
     }
 
     public void savePreferences() {
@@ -358,5 +372,4 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         editor.putInt(STATE_REMAINING_POINTS, mRemainingPoints);
         editor.apply();
     }
-
 }

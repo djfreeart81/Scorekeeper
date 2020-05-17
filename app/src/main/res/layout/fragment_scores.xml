@@ -96,7 +96,7 @@
                 android:text="4" />
 
             <Button
-                android:id="@+id/decreaseTeam1By5"
+                android:id="@+id/faultTeam1By5"
                 style="@style/ScoreButtonsDetailsFault"
                 android:layout_below="@id/faultTeam1By2"
                 android:text="5" />
@@ -104,14 +104,14 @@
             <Button
                 android:id="@+id/faultTeam1By6"
                 style="@style/ScoreButtonsDetailsFault"
-                android:layout_alignBottom="@id/decreaseTeam1By5"
-                android:layout_toRightOf="@id/decreaseTeam1By5"
+                android:layout_alignBottom="@id/faultTeam1By5"
+                android:layout_toRightOf="@id/faultTeam1By5"
                 android:text="6" />
 
             <Button
                 android:id="@+id/faultTeam1By7"
                 style="@style/ScoreButtonsDetailsFault"
-                android:layout_alignBottom="@id/decreaseTeam1By5"
+                android:layout_alignBottom="@id/faultTeam1By5"
                 android:layout_toRightOf="@id/faultTeam1By6"
                 android:text="7" />
         </RelativeLayout>
