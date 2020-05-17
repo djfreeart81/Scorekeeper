@@ -30,7 +30,16 @@
     <style name="MinusButtons" parent="ScoreButtons">
         <item name="android:src">@drawable/ic_minus</item>
         <item name="contentDescription">@string/minus_button</item>
+        <item name="android:background">@color/darkRed</item>
+    </style>
 
+    <style name="ScoreButtonsDetails" parent="Widget.AppCompat.Button">
+        <item name="android:layout_width">@dimen/subButton_size</item>
+        <item name="android:layout_height">@dimen/subButton_size</item>
+    </style>
+
+    <style name="ScoreButtonsDetailsFault" parent="ScoreButtonsDetails">
+        <item name="android:background">@color/darkRed</item>
     </style>
 
     <style name="ScoreMatchText">

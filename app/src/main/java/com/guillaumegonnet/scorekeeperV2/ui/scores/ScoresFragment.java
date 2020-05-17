@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,8 @@ import com.guillaumegonnet.scorekeeperV2.MainActivity;
 import com.guillaumegonnet.scorekeeperV2.Match;
 import com.guillaumegonnet.scorekeeperV2.R;
 import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
+
+import java.util.LinkedList;
 
 public class ScoresFragment extends Fragment implements View.OnClickListener, MainActivity.ListenFromActivity {
 
@@ -58,6 +61,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     private TextView mRemainingPointsText;
     private Button mCancelBtn;
     private Match match;
+    private LinkedList pointslist = new LinkedList();
 
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.guillaumegonnet.scorekeeper";
@@ -156,47 +160,47 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         int viewId = v.getId();
 
         switch (viewId) {
-            case R.id.decreaseTeam1By1:
-                changeScore(1, -1);
+            case R.id.faultTeam1By1:
+                changeScoreFault(1, 1);
                 break;
-            case R.id.decreaseTeam1By2:
-                changeScore(1, -2);
+            case R.id.faultTeam1By2:
+                changeScoreFault(1, 2);
                 break;
-            case R.id.decreaseTeam1By3:
-                changeScore(1, -3);
+            case R.id.faultTeam1By3:
+                changeScoreFault(1, 3);
                 break;
-            case R.id.decreaseTeam1By4:
-                changeScore(1, -4);
+            case R.id.faultTeam1By4:
+                changeScoreFault(1, 4);
                 break;
             case R.id.decreaseTeam1By5:
-                changeScore(1, -5);
+                changeScoreFault(1, 5);
                 break;
-            case R.id.decreaseTeam1By6:
-                changeScore(1, -6);
+            case R.id.faultTeam1By6:
+                changeScoreFault(1, 6);
                 break;
-            case R.id.decreaseTeam1By7:
-                changeScore(1, -7);
+            case R.id.faultTeam1By7:
+                changeScoreFault(1, 7);
                 break;
-            case R.id.decreaseTeam2By1:
-                changeScore(2, -1);
+            case R.id.faultTeam2By1:
+                changeScoreFault(2, 1);
                 break;
-            case R.id.decreaseTeam2By2:
-                changeScore(2, -2);
+            case R.id.faultTeam2By2:
+                changeScoreFault(2, 2);
                 break;
-            case R.id.decreaseTeam2By3:
-                changeScore(2, -3);
+            case R.id.faultTeam2By3:
+                changeScoreFault(2, 3);
                 break;
-            case R.id.decreaseTeam2By4:
-                changeScore(2, -4);
+            case R.id.faultTeam2By4:
+                changeScoreFault(2, 4);
                 break;
-            case R.id.decreaseTeam2By5:
-                changeScore(2, -5);
+            case R.id.faultTeam2By5:
+                changeScoreFault(2, 5);
                 break;
-            case R.id.decreaseTeam2By6:
-                changeScore(2, -6);
+            case R.id.faultTeam2By6:
+                changeScoreFault(2, 6);
                 break;
-            case R.id.decreaseTeam2By7:
-                changeScore(2, -7);
+            case R.id.faultTeam2By7:
+                changeScoreFault(2, 7);
                 break;
             case R.id.increaseTeam1By1:
                 changeScore(1, 1);
@@ -250,8 +254,31 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     }
 
     public void endGame(View view) {
-        EndGameDialogFragment dialog = new EndGameDialogFragment();
-        dialog.show(getParentFragmentManager(), "EndGameDialogFragment");
+        // EndGameDialogFragment dialog = new EndGameDialogFragment();
+        // dialog.show(getParentFragmentManager(), "EndGameDialogFragment");
+        if (mScoreGame1 > mScoreGame2) {
+            Toast.makeText(getContext(), mTeamName1 + " won the game", Toast.LENGTH_SHORT).show();
+            mScoreMatch1++;
+            mScoreMatchText1.setText(String.valueOf(mScoreMatch1));
+            SharedPreferences.Editor editor = mPreferences.edit();
+            editor.putInt(STATE_SCORE_MATCH_1, mScoreMatch1);
+            editor.apply();
+        } else if (mScoreGame2 > mScoreGame1) {
+            Toast.makeText(getContext(), mTeamName2 + " won the game", Toast.LENGTH_SHORT).show();
+            mScoreMatch2++;
+            mScoreMatchText2.setText(String.valueOf(mScoreMatch2));
+            SharedPreferences.Editor editor = mPreferences.edit();
+            editor.putInt(STATE_SCORE_MATCH_2, mScoreMatch2);
+            editor.apply();
+        }
+        mScoreGame1 = 0;
+        mScoreGame2 = 0;
+        mScoreGame1Before = 0;
+        mScoreGame2Before = 0;
+        mScoreGameText1.setText(String.valueOf(mScoreGame1));
+        mScoreGameText2.setText(String.valueOf(mScoreGame2));
+        mCancelBtn.setEnabled(false);
+        savePreferences();
     }
 
     // Methods executed on Listener defined in Main Activity for EndGameDialogFragment
@@ -291,24 +318,35 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
             case 1:
                 mScoreGame1 += point;
                 mScoreGameText1.setText(String.valueOf(mScoreGame1));
-                if (Math.abs(point) == 1) {
-                    mRemainingPoints -= point;
-                } else {
-                    mRemainingPoints -= 7; //max point should be removed when color ball scored
-                }
                 break;
             case 2:
                 mScoreGame2 += point;
                 mScoreGameText2.setText(String.valueOf(mScoreGame2));
-                if (Math.abs(point) == 1) {
-                    mRemainingPoints -= point;
-                } else {
-                    mRemainingPoints -= 7; //max point should be removed when color ball scored
-                }
-                break;
         }
+        calculateRemainingPoints();
         mRemainingPointsText.setText(getString(R.string.remaining_points, mRemainingPoints));
         savePreferences();
+    }
+
+    public void changeScoreFault(int team, int point) {
+        mScoreGame1Before = mScoreGame1;
+        mScoreGame2Before = mScoreGame2;
+        mCancelBtn.setEnabled(true);
+
+        switch (team) {
+            case 1:
+                mScoreGame2 += point;
+                mScoreGameText2.setText(String.valueOf(mScoreGame2));
+                break;
+            case 2:
+                mScoreGame1 += point;
+                mScoreGameText1.setText(String.valueOf(mScoreGame1));
+        }
+        savePreferences();
+    }
+
+    private void calculateRemainingPoints() {
+
     }
 
     public void savePreferences() {
