@@ -19,8 +19,6 @@ import com.guillaumegonnet.scorekeeperV2.Match;
 import com.guillaumegonnet.scorekeeperV2.R;
 import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
 
-import java.util.LinkedHashMap;
-
 public class ScoresFragment extends Fragment implements View.OnClickListener, MainActivity.ListenFromActivity {
 
     public static final String BUNDLE_KEY_TEAM_1 = "Team 1";
@@ -60,7 +58,8 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     private TextView mRemainingPointsText;
     private Button mCancelBtn;
     private Match match;
-    private LinkedHashMap<Integer, Integer> mBallScoredMap = new LinkedHashMap<>(); //will store balls scored with K=Team# & V=Score
+    //private LinkedHashMap<Integer, Integer> mBallScoredMap = new LinkedHashMap<>(); //will store balls scored with K=Team# & V=Score
+    //private LinkedMap<Integer,Integer> mBallScoredMap = new LinkedMap();
 
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.guillaumegonnet.scorekeeper";
@@ -304,7 +303,9 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         mScoreGameText1.setText(String.valueOf(mScoreGame1));
         mScoreGameText2.setText(String.valueOf(mScoreGame2));
         mCancelBtn.setEnabled(false);
+        // mBallScoredMap.remove(mBallScoredMap.size()-1);
         savePreferences();
+        //    Log.d("Linked List","Linked List value after cancellation" + mBallScoredMap);
     }
 
     public void changeScore(int team, int point) {
@@ -323,7 +324,8 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
                 mScoreGame2 += point;
                 mScoreGameText2.setText(String.valueOf(mScoreGame2));
         }
-        mBallScoredMap.put(team, point);
+        //   mBallScoredMap.put(team, point);
+        //    Log.d("Linked List","Linked List value after cancellation" + mBallScoredMap);
         savePreferences();
     }
 
@@ -344,7 +346,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         savePreferences();
     }
 
-    private void calculateRemainingPoints(int point) {
+    public int calculateRemainingPoints(int point) {
 
         int previousBallScored = Math.max(mScoreGame1 - mScoreGame1Before, mScoreGame2 - mScoreGame2Before);
 
@@ -356,11 +358,16 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
                 mRemainingPoints -= 1 * Integer.signum(point);
             }
         } else {
-            mRemainingPoints -= 7 * Integer.signum(point);
+            if (previousBallScored != 1) {
+                mRemainingPoints -= point;
+            } else {
+                mRemainingPoints -= 7 * Integer.signum(point);
+            }
         }
 
         mRemainingPointsText.setText(getString(R.string.remaining_points, mRemainingPoints));
         savePreferences();
+        return mRemainingPoints;
     }
 
     public void savePreferences() {
