@@ -1,5 +1,7 @@
 package com.guillaumegonnet.scorekeeperV2;
 
+import java.util.LinkedList;
+
 /**
  * Created by Guillaume Gonnet on 09/05/20.
  */
@@ -9,11 +11,13 @@ public class Match {
     public String team2;
     public int scoreMatchTeam1;
     public int scoreMatchTeam2;
-    public int mScoreGameTeam1;
-    public int mScoreGameTeam2;
     public int mRaceTo;
     public boolean isMatchStarted;
-    public int mRemainingPoints = 147;
+    public int mRemainingPoints = 99;
+
+    //mBallScoredList contains (team, fault, point)
+    private LinkedList<LinkedList<Integer>> mBallScoredList = new LinkedList<LinkedList<Integer>>();
+
 
     public Match(String sportName, String team1, String team2, int mRaceTo) {
         this.sportName = sportName;
@@ -48,18 +52,24 @@ public class Match {
         return mRaceTo;
     }
 
-    public void increaseScore(String team, int points) {
-        if (team == team1) {
-            mScoreGameTeam1 += points;
+    public int getScoreGame(int team, LinkedList<LinkedList<Integer>> mBallScoredList) {
+        int score = 0;
+        for (LinkedList<Integer> list : mBallScoredList) {
+            if (list.getFirst() == team) {
+                score += list.getLast();
+            }
         }
-        if (team == team2) {
-            mScoreGameTeam2 += points;
+        return score;
+    }
+
+    public int getRemainingPoints(LinkedList<LinkedList<Integer>> mBallScoredList) {
+        int numberOfRedScored = 0;
+        for (LinkedList<Integer> list : mBallScoredList) {
+            if (list.get(1) == 0 && list.get(2) == 1) {
+                numberOfRedScored++;
+            }
         }
 
-        if (points == 1 || points == -1) {
-            mRemainingPoints -= points;
-        } else {
-            mRemainingPoints += points % Math.abs(points) * 7;
-        }
+        return mRemainingPoints;
     }
 }

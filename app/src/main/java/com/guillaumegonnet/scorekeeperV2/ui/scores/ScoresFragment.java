@@ -2,6 +2,7 @@ package com.guillaumegonnet.scorekeeperV2.ui.scores;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import com.guillaumegonnet.scorekeeperV2.MainActivity;
 import com.guillaumegonnet.scorekeeperV2.Match;
 import com.guillaumegonnet.scorekeeperV2.R;
 import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
+
+import java.util.LinkedList;
 
 public class ScoresFragment extends Fragment implements View.OnClickListener, MainActivity.ListenFromActivity {
 
@@ -58,8 +61,8 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     private TextView mRemainingPointsText;
     private Button mCancelBtn;
     private Match match;
-    //private LinkedHashMap<Integer, Integer> mBallScoredMap = new LinkedHashMap<>(); //will store balls scored with K=Team# & V=Score
-    //private LinkedMap<Integer,Integer> mBallScoredMap = new LinkedMap();
+
+    private LinkedList<LinkedList<Integer>> mBallScoredList = new LinkedList<LinkedList<Integer>>();
 
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.guillaumegonnet.scorekeeper";
@@ -111,7 +114,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
                 mRemainingPoints = mPreferences.getInt(STATE_REMAINING_POINTS, 99);
             }
         // }
-        Match match = new Match(mBillardType, mTeamName1, mTeamName2, mRaceTo);
+        match = new Match(mBillardType, mTeamName1, mTeamName2, mRaceTo);
 
         mScoreMatchText1.setText(String.valueOf(mScoreMatch1));
         mScoreMatchText2.setText(String.valueOf(mScoreMatch2));
@@ -157,88 +160,88 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
 
         switch (viewId) {
             case R.id.faultTeam1By1:
-                changeScoreFault(1, 1);
+                changeScore(1, 1, 1);
                 break;
             case R.id.faultTeam1By2:
-                changeScoreFault(1, 2);
+                changeScore(1, 1, 2);
                 break;
             case R.id.faultTeam1By3:
-                changeScoreFault(1, 3);
+                changeScore(1, 1, 3);
                 break;
             case R.id.faultTeam1By4:
-                changeScoreFault(1, 4);
+                changeScore(1, 1, 4);
                 break;
             case R.id.faultTeam1By5:
-                changeScoreFault(1, 5);
+                changeScore(1, 1, 5);
                 break;
             case R.id.faultTeam1By6:
-                changeScoreFault(1, 6);
+                changeScore(1, 1, 6);
                 break;
             case R.id.faultTeam1By7:
-                changeScoreFault(1, 7);
+                changeScore(1, 1, 7);
                 break;
             case R.id.faultTeam2By1:
-                changeScoreFault(2, 1);
+                changeScore(2, 1, 1);
                 break;
             case R.id.faultTeam2By2:
-                changeScoreFault(2, 2);
+                changeScore(2, 1, 2);
                 break;
             case R.id.faultTeam2By3:
-                changeScoreFault(2, 3);
+                changeScore(2, 1, 3);
                 break;
             case R.id.faultTeam2By4:
-                changeScoreFault(2, 4);
+                changeScore(2, 1, 4);
                 break;
             case R.id.faultTeam2By5:
-                changeScoreFault(2, 5);
+                changeScore(2, 1, 5);
                 break;
             case R.id.faultTeam2By6:
-                changeScoreFault(2, 6);
+                changeScore(2, 1, 6);
                 break;
             case R.id.faultTeam2By7:
-                changeScoreFault(2, 7);
+                changeScore(2, 1, 7);
                 break;
             case R.id.increaseTeam1By1:
-                changeScore(1, 1);
+                changeScore(1, 0, 1);
                 break;
             case R.id.increaseTeam1By2:
-                changeScore(1, 2);
+                changeScore(1, 0, 2);
                 break;
             case R.id.increaseTeam1By3:
-                changeScore(1, 3);
+                changeScore(1, 0, 3);
                 break;
             case R.id.increaseTeam1By4:
-                changeScore(1, 4);
+                changeScore(1, 0, 4);
                 break;
             case R.id.increaseTeam1By5:
-                changeScore(1, 5);
+                changeScore(1, 0, 5);
                 break;
             case R.id.increaseTeam1By6:
-                changeScore(1, 6);
+                changeScore(1, 0, 6);
                 break;
             case R.id.increaseTeam1By7:
-                changeScore(1, 7);
+                changeScore(1, 0, 7);
                 break;
             case R.id.increaseTeam2By1:
-                changeScore(2, 1);
+                changeScore(2, 0, 1);
                 break;
             case R.id.increaseTeam2By2:
-                changeScore(2, 2);
+                changeScore(2, 0, 2);
                 break;
             case R.id.increaseTeam2By3:
-                changeScore(2, 3);
+                changeScore(2, 0, 3);
                 break;
             case R.id.increaseTeam2By4:
-                changeScore(2, 4);
+                changeScore(2, 0, 4);
                 break;
             case R.id.increaseTeam2By5:
-                changeScore(2, 5);
+                changeScore(2, 0, 5);
                 break;
             case R.id.increaseTeam2By6:
-                changeScore(2, 6);
+                changeScore(2, 0, 6);
                 break;
             case R.id.increaseTeam2By7:
-                changeScore(2, 7);
+                changeScore(2, 0, 7);
                 break;
             case R.id.cancel_btn:
                 cancelLastAction(v);
@@ -303,48 +306,37 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         mScoreGameText1.setText(String.valueOf(mScoreGame1));
         mScoreGameText2.setText(String.valueOf(mScoreGame2));
         mCancelBtn.setEnabled(false);
-        // mBallScoredMap.remove(mBallScoredMap.size()-1);
+
+        mBallScoredList.removeLast();
         savePreferences();
-        //    Log.d("Linked List","Linked List value after cancellation" + mBallScoredMap);
+        Log.d("Linked List", "Linked List value after cancellation" + mBallScoredList);
     }
 
-    public void changeScore(int team, int point) {
+    public void changeScore(int team, int fault, int point) {
+
+        //add ball scored in the List
+        LinkedList<Integer> linkedList = new LinkedList<Integer>();
+        linkedList.add(team);
+        linkedList.add(fault);
+        linkedList.add(point);
+        mBallScoredList.add(linkedList);
+
+        mCancelBtn.setEnabled(true);
+
+        switch (team) {
+            case 1:
+                mScoreGame1 = match.getScoreGame(team, mBallScoredList);
+                mScoreGameText1.setText(String.valueOf(mScoreGame1));
+                break;
+            case 2:
+                mScoreGame1 = match.getScoreGame(team, mBallScoredList);
+                mScoreGameText2.setText(String.valueOf(mScoreGame2));
+                break;
+        }
         calculateRemainingPoints(point);
-        //save current Score to be able to cancel
-        mScoreGame1Before = mScoreGame1;
-        mScoreGame2Before = mScoreGame2;
-        mCancelBtn.setEnabled(true);
-
-        switch (team) {
-            case 1:
-                mScoreGame1 += point;
-                mScoreGameText1.setText(String.valueOf(mScoreGame1));
-                break;
-            case 2:
-                mScoreGame2 += point;
-                mScoreGameText2.setText(String.valueOf(mScoreGame2));
-        }
-        //   mBallScoredMap.put(team, point);
-        //    Log.d("Linked List","Linked List value after cancellation" + mBallScoredMap);
         savePreferences();
     }
 
-    public void changeScoreFault(int team, int point) {
-        mScoreGame1Before = mScoreGame1;
-        mScoreGame2Before = mScoreGame2;
-        mCancelBtn.setEnabled(true);
-
-        switch (team) {
-            case 1:
-                mScoreGame2 += point;
-                mScoreGameText2.setText(String.valueOf(mScoreGame2));
-                break;
-            case 2:
-                mScoreGame1 += point;
-                mScoreGameText1.setText(String.valueOf(mScoreGame1));
-        }
-        savePreferences();
-    }
 
     public int calculateRemainingPoints(int point) {
 

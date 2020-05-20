@@ -22,9 +22,21 @@ public class ScoresFragmentTest {
     int result = 0;
 
 
+
     @Test
     public void RemainingRedColour() {
         int[] scoredBalls = {1, 2, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 2, 1, 3, 2, 3, 4, 5, 6, 7};
+
+        for (int i = 0; i < scoredBalls.length; i++) {
+            previousBallScored = i == 0 ? 0 : scoredBalls[i - 1];
+            result = calculateRemainingPoints(scoredBalls[i], previousBallScored);
+        }
+        assertThat(result, is(equalTo(0)));
+    }
+
+    @Test
+    public void RemainingRedAll() {
+        int[] scoredBalls = {1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6, 7};
 
         for (int i = 0; i < scoredBalls.length; i++) {
             previousBallScored = i == 0 ? 0 : scoredBalls[i - 1];
