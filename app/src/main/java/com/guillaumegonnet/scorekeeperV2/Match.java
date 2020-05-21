@@ -37,6 +37,7 @@ public class Match {
     public int getScoreMatchTeam1() {
         return scoreMatchTeam1;
     }
+
     public void setScoreMatchTeam1(int scoreMatchTeam1) {
         this.scoreMatchTeam1 = scoreMatchTeam1;
     }
@@ -44,6 +45,7 @@ public class Match {
     public int getScoreMatchTeam2() {
         return scoreMatchTeam2;
     }
+
     public void setScoreMatchTeam2(int scoreMatchTeam2) {
         this.scoreMatchTeam2 = scoreMatchTeam2;
     }
@@ -52,9 +54,9 @@ public class Match {
         return mRaceTo;
     }
 
-    public int getScoreGame(int team, LinkedList<LinkedList<Integer>> mBallScoredList) {
+    public int getScoreGame(int team, LinkedList<LinkedList<Integer>> scoreList) {
         int score = 0;
-        for (LinkedList<Integer> list : mBallScoredList) {
+        for (LinkedList<Integer> list : scoreList) {
             if (list.getFirst() == team) {
                 score += list.getLast();
             }
@@ -62,14 +64,31 @@ public class Match {
         return score;
     }
 
-    public int getRemainingPoints(LinkedList<LinkedList<Integer>> mBallScoredList) {
+    public int getRemainingPoints(LinkedList<LinkedList<Integer>> scoreList) {
         int numberOfRedScored = 0;
-        for (LinkedList<Integer> list : mBallScoredList) {
-            if (list.get(1) == 0 && list.get(2) == 1) {
+        int valueOfColorAtEndScored = 0;
+
+        //create a LinkedList with only ball points (no fault points)
+        LinkedList<Integer> ballScoredList = new LinkedList<>();
+        for (LinkedList<Integer> list : scoreList) {
+            if (list.get(1) == 0) {
+                ballScoredList.add(list.get(2));
+            }
+        }
+        for (int ball : ballScoredList) {
+            if (ball == 1) {
                 numberOfRedScored++;
             }
         }
+        // count points for the last color balls as no red entered before
+        int i = ballScoredList.size() - 1;
+        if (ballScoredList.size() > 1) {
+            while (ballScoredList.get(i) > 1 && ballScoredList.get(i - 1) > 1) {
+                valueOfColorAtEndScored += ballScoredList.get(i);
+                i--;
+            }
+        }
 
-        return mRemainingPoints;
+        return mRemainingPoints - numberOfRedScored * 8 - valueOfColorAtEndScored;
     }
 }

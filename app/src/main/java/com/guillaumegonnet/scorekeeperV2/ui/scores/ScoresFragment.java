@@ -2,7 +2,6 @@ package com.guillaumegonnet.scorekeeperV2.ui.scores;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +61,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     private Button mCancelBtn;
     private Match match;
 
-    private LinkedList<LinkedList<Integer>> mBallScoredList = new LinkedList<LinkedList<Integer>>();
+    private LinkedList<LinkedList<Integer>> mScoreList = new LinkedList<LinkedList<Integer>>();
 
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.guillaumegonnet.scorekeeper";
@@ -300,16 +299,15 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     }
 
     public void cancelLastAction(View view) {
-        calculateRemainingPoints(-Math.max(mScoreGame2 - mScoreGame2Before, mScoreGame1 - mScoreGame1Before));
-        mScoreGame2 = mScoreGame2Before;
-        mScoreGame1 = mScoreGame1Before;
+        mScoreList.removeLast();
+        match.getRemainingPoints(mScoreList);
+        mScoreGame2 = match.getScoreGame(2, mScoreList);
+        mScoreGame1 = match.getScoreGame(1, mScoreList);
         mScoreGameText1.setText(String.valueOf(mScoreGame1));
         mScoreGameText2.setText(String.valueOf(mScoreGame2));
         mCancelBtn.setEnabled(false);
 
-        mBallScoredList.removeLast();
         savePreferences();
-        Log.d("Linked List", "Linked List value after cancellation" + mBallScoredList);
     }
 
     public void changeScore(int team, int fault, int point) {
@@ -319,48 +317,25 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         linkedList.add(team);
         linkedList.add(fault);
         linkedList.add(point);
-        mBallScoredList.add(linkedList);
+        mScoreList.add(linkedList);
 
         mCancelBtn.setEnabled(true);
 
         switch (team) {
             case 1:
-                mScoreGame1 = match.getScoreGame(team, mBallScoredList);
+                mScoreGame1 = match.getScoreGame(1, mScoreList);
                 mScoreGameText1.setText(String.valueOf(mScoreGame1));
                 break;
             case 2:
-                mScoreGame1 = match.getScoreGame(team, mBallScoredList);
+                mScoreGame2 = match.getScoreGame(2, mScoreList);
                 mScoreGameText2.setText(String.valueOf(mScoreGame2));
                 break;
         }
-        calculateRemainingPoints(point);
-        savePreferences();
-    }
-
-
-    public int calculateRemainingPoints(int point) {
-
-        int previousBallScored = Math.max(mScoreGame1 - mScoreGame1Before, mScoreGame2 - mScoreGame2Before);
-
-        if (point == 1 || point == -1) {
-            if (previousBallScored == 1) {
-                mRemainingPoints -= 7 * Integer.signum(point); //reflect the color ball missed during previous turn
-                mRemainingPoints -= 1 * Integer.signum(point);
-            } else {
-                mRemainingPoints -= 1 * Integer.signum(point);
-            }
-        } else {
-            if (previousBallScored != 1) {
-                mRemainingPoints -= point;
-            } else {
-                mRemainingPoints -= 7 * Integer.signum(point);
-            }
-        }
-
+        mRemainingPoints = match.getRemainingPoints(mScoreList);
         mRemainingPointsText.setText(getString(R.string.remaining_points, mRemainingPoints));
         savePreferences();
-        return mRemainingPoints;
     }
+
 
     public void savePreferences() {
         SharedPreferences.Editor editor = mPreferences.edit();
