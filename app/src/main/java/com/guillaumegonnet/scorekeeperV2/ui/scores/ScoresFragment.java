@@ -90,16 +90,6 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
 
         mPreferences = getActivity().getSharedPreferences(sharedPrefFile, getActivity().MODE_PRIVATE);
 
-
-        // if (getArguments() != null && getArguments().containsKey(BUNDLE_KEY_INIT)) {
-        //     mTeamName1 = getArguments().getString(BUNDLE_KEY_TEAM_1);
-        //     mTeamName2 = getArguments().getString(BUNDLE_KEY_TEAM_2);
-        //     mRaceTo = getArguments().getInt(BUNDLE_KEY_RACE_TO, 0);
-        //     mBillardType = getArguments().getString(BUNDLE_KEY_BILLARD);
-        //     getArguments().remove(BUNDLE_KEY_INIT);
-        //
-        // } else {
-
             if (mPreferences != null) {
                 mScoreGame1 = mPreferences.getInt(STATE_SCORE_GAME_1, 0);
                 mScoreGame2 = mPreferences.getInt(STATE_SCORE_GAME_2, 0);
@@ -301,10 +291,10 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     public void cancelLastAction(View view) {
         mScoreList.removeLast();
         match.getRemainingPoints(mScoreList);
-        mScoreGame2 = match.getScoreGame(2, mScoreList);
-        mScoreGame1 = match.getScoreGame(1, mScoreList);
-        mScoreGameText1.setText(String.valueOf(mScoreGame1));
-        mScoreGameText2.setText(String.valueOf(mScoreGame2));
+        // mScoreGame2 = match.getScoreGame(2, mScoreList);
+        // mScoreGame1 = match.getScoreGame(1, mScoreList);
+        mScoreGameText1.setText(String.valueOf(match.getScoreGame(1, mScoreList)));
+        mScoreGameText2.setText(String.valueOf(match.getScoreGame(2, mScoreList)));
         mCancelBtn.setEnabled(false);
 
         savePreferences();
@@ -331,8 +321,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
                 mScoreGameText2.setText(String.valueOf(mScoreGame2));
                 break;
         }
-        mRemainingPoints = match.getRemainingPoints(mScoreList);
-        mRemainingPointsText.setText(getString(R.string.remaining_points, mRemainingPoints));
+        mRemainingPointsText.setText(getString(R.string.remaining_points, match.getRemainingPoints(mScoreList)));
         savePreferences();
     }
 
