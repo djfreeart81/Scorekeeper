@@ -68,11 +68,11 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/minus_team1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/minus_team1"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gameTeam1">
 
             <Button
@@ -117,11 +117,11 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/plus_team1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/plus_team1"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gameTeam1">
 
             <Button
@@ -234,45 +234,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gameTeam2">
 
-        <Button
-            android:id="@+id/faultTeam2By2"
-            style="@style/ScoreButtonsDetailsFault"
-            android:layout_marginTop="8dp"
-            android:text="2" />
+            <Button
+                android:id="@+id/faultTeam2By2"
+                style="@style/ScoreButtonsDetailsFault"
+                android:layout_marginTop="8dp"
+                android:text="2" />
 
-        <Button
-            android:id="@+id/faultTeam2By3"
-            style="@style/ScoreButtonsDetailsFault"
-            android:layout_alignBottom="@id/faultTeam2By2"
-            android:layout_toRightOf="@+id/faultTeam2By2"
-            android:text="3" />
+            <Button
+                android:id="@+id/faultTeam2By3"
+                style="@style/ScoreButtonsDetailsFault"
+                android:layout_alignBottom="@id/faultTeam2By2"
+                android:layout_toRightOf="@+id/faultTeam2By2"
+                android:text="3" />
 
-        <Button
-            android:id="@+id/faultTeam2By4"
-            style="@style/ScoreButtonsDetailsFault"
-            android:layout_alignBottom="@id/faultTeam2By2"
-            android:layout_toRightOf="@+id/faultTeam2By3"
-            android:text="4" />
+            <Button
+                android:id="@+id/faultTeam2By4"
+                style="@style/ScoreButtonsDetailsFault"
+                android:layout_alignBottom="@id/faultTeam2By2"
+                android:layout_toRightOf="@+id/faultTeam2By3"
+                android:text="4" />
 
-        <Button
-            android:id="@+id/faultTeam2By5"
-            style="@style/ScoreButtonsDetailsFault"
-            android:layout_below="@id/faultTeam2By2"
-            android:text="5" />
+            <Button
+                android:id="@+id/faultTeam2By5"
+                style="@style/ScoreButtonsDetailsFault"
+                android:layout_below="@id/faultTeam2By2"
+                android:text="5" />
 
-        <Button
-            android:id="@+id/faultTeam2By6"
-            style="@style/ScoreButtonsDetailsFault"
-            android:layout_alignBottom="@id/faultTeam2By5"
-            android:layout_toRightOf="@id/faultTeam2By5"
-            android:text="6" />
+            <Button
+                android:id="@+id/faultTeam2By6"
+                style="@style/ScoreButtonsDetailsFault"
+                android:layout_alignBottom="@id/faultTeam2By5"
+                android:layout_toRightOf="@id/faultTeam2By5"
+                android:text="6" />
 
-        <Button
-            android:id="@+id/faultTeam2By7"
-            style="@style/ScoreButtonsDetailsFault"
-            android:layout_alignBottom="@id/faultTeam2By5"
-            android:layout_toRightOf="@id/faultTeam2By6"
-            android:text="7" />
+            <Button
+                android:id="@+id/faultTeam2By7"
+                style="@style/ScoreButtonsDetailsFault"
+                android:layout_alignBottom="@id/faultTeam2By5"
+                android:layout_toRightOf="@id/faultTeam2By6"
+                android:text="7" />
 
         </RelativeLayout>
 
@@ -282,47 +282,47 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gameTeam2">
 
-        <Button
-            android:id="@+id/increaseTeam2By2"
-            style="@style/ScoreButtonsDetails"
-            android:layout_marginTop="8dp"
-            android:layout_toLeftOf="@+id/increaseTeam2By3"
-            android:text="2" />
+            <Button
+                android:id="@+id/increaseTeam2By2"
+                style="@style/ScoreButtonsDetails"
+                android:layout_marginTop="8dp"
+                android:layout_toLeftOf="@+id/increaseTeam2By3"
+                android:text="2" />
 
-        <Button
-            android:id="@+id/increaseTeam2By3"
-            style="@style/ScoreButtonsDetails"
-            android:layout_alignBottom="@id/increaseTeam2By4"
-            android:layout_toLeftOf="@+id/increaseTeam2By4"
-            android:text="3" />
+            <Button
+                android:id="@+id/increaseTeam2By3"
+                style="@style/ScoreButtonsDetails"
+                android:layout_alignBottom="@id/increaseTeam2By4"
+                android:layout_toLeftOf="@+id/increaseTeam2By4"
+                android:text="3" />
 
-        <Button
-            android:id="@+id/increaseTeam2By4"
-            style="@style/ScoreButtonsDetails"
-            android:layout_alignBottom="@id/increaseTeam2By2"
-            android:layout_alignParentRight="true"
-            android:text="4" />
+            <Button
+                android:id="@+id/increaseTeam2By4"
+                style="@style/ScoreButtonsDetails"
+                android:layout_alignBottom="@id/increaseTeam2By2"
+                android:layout_alignParentRight="true"
+                android:text="4" />
 
-        <Button
-            android:id="@+id/increaseTeam2By5"
-            style="@style/ScoreButtonsDetails"
-            android:layout_alignBottom="@id/increaseTeam2By7"
-            android:layout_toLeftOf="@id/increaseTeam2By6"
-            android:text="5" />
+            <Button
+                android:id="@+id/increaseTeam2By5"
+                style="@style/ScoreButtonsDetails"
+                android:layout_alignBottom="@id/increaseTeam2By7"
+                android:layout_toLeftOf="@id/increaseTeam2By6"
+                android:text="5" />
 
-        <Button
-            android:id="@+id/increaseTeam2By6"
-            style="@style/ScoreButtonsDetails"
-            android:layout_alignBottom="@id/increaseTeam2By7"
-            android:layout_toLeftOf="@id/increaseTeam2By7"
-            android:text="6" />
+            <Button
+                android:id="@+id/increaseTeam2By6"
+                style="@style/ScoreButtonsDetails"
+                android:layout_alignBottom="@id/increaseTeam2By7"
+                android:layout_toLeftOf="@id/increaseTeam2By7"
+                android:text="6" />
 
-        <Button
-            android:id="@+id/increaseTeam2By7"
-            style="@style/ScoreButtonsDetails"
-            android:layout_below="@id/increaseTeam2By4"
-            android:layout_alignParentRight="true"
-            android:text="7" />
+            <Button
+                android:id="@+id/increaseTeam2By7"
+                style="@style/ScoreButtonsDetails"
+                android:layout_below="@id/increaseTeam2By4"
+                android:layout_alignParentRight="true"
+                android:text="7" />
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -332,36 +332,42 @@
         android:layout_height="0dp"
         android:layout_weight="4">
 
-        <TextView
-            android:id="@+id/remaining_points"
+        <LinearLayout
+            android:id="@+id/information_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/remaining_points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/remaining_points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/remaining_points"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            <TextView
+                android:id="@+id/raceto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="@string/race_to"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/endGame_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="24dp"
+            android:layout_marginTop="24dp"
             android:text="@string/endGame_btn"
-            app:layout_constraintEnd_toStartOf="@id/endMatch_btn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/remaining_points" />
-
-        <Button
-            android:id="@+id/endMatch_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="24dp"
-            android:text="@string/endMatch_btn"
-            app:layout_constraintBaseline_toBaselineOf="@id/endGame_btn"
             app:layout_constraintEnd_toStartOf="@id/cancel_btn"
-            app:layout_constraintStart_toEndOf="@id/endGame_btn" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/information_layout" />
 
         <Button
             android:id="@+id/cancel_btn"
@@ -371,6 +377,6 @@
             android:text="@string/cancel_last_btn"
             app:layout_constraintBaseline_toBaselineOf="@id/endGame_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/endMatch_btn" />
+            app:layout_constraintStart_toEndOf="@id/endGame_btn" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

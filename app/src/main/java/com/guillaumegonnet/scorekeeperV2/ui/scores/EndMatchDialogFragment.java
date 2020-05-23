@@ -15,11 +15,11 @@ import com.guillaumegonnet.scorekeeperV2.R;
 /**
  * Created by Guillaume Gonnet on 15/05/20.
  */
-public class EndGameDialogFragment extends DialogFragment {
+public class EndMatchDialogFragment extends DialogFragment {
 
 
     // Use this instance of the interface to deliver action events
-    private EndGameDialogListener listener;
+    private EndMatchDialogListener listener;
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
     @Override
@@ -28,10 +28,10 @@ public class EndGameDialogFragment extends DialogFragment {
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
-            listener = (EndGameDialogListener) context;
+            listener = (EndMatchDialogListener) context;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(getActivity().toString() + "must implement EndGameDialogListener");
+            throw new ClassCastException(getActivity().toString() + "must implement EndMatchDialogListener");
         }
 
     }
@@ -41,17 +41,17 @@ public class EndGameDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.dialog_select_team)
-                .setPositiveButton(R.string.team_1, new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.replay_question)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        listener.onDialogPositiveClick(EndGameDialogFragment.this);
+                        listener.onDialogPositiveClick(EndMatchDialogFragment.this);
                     }
                 })
-                .setNegativeButton(R.string.team_2, new DialogInterface.OnClickListener() {
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        listener.onDialogNegativeClick(EndGameDialogFragment.this);
+                        listener.onDialogNegativeClick(EndMatchDialogFragment.this);
                     }
                 });
         return builder.create();
@@ -60,7 +60,7 @@ public class EndGameDialogFragment extends DialogFragment {
     /* The activity that creates an instance of this dialog fragment must
      * implement this interface in order to receive event callbacks.
      * Each method passes the DialogFragment in case the host needs to query it. */
-    public interface EndGameDialogListener {
+    public interface EndMatchDialogListener {
         void onDialogPositiveClick(DialogFragment dialog);
 
         void onDialogNegativeClick(DialogFragment dialog);

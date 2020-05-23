@@ -28,11 +28,6 @@ public class SelectGameFragment extends Fragment {
 
     public static final String BUNDLE_KEY_TEAM_1 = "Team 1";
     public static final String BUNDLE_KEY_TEAM_2 = "Team 2";
-    public static final String BUNDLE_KEY_BILLARD = "Billard Type";
-    public static final String BUNDLE_KEY_RACE_TO = "Race To";
-    public static final String BUNDLE_KEY_INIT = "New Match";
-    static final String STATE_SCORE_1 = "Team 1 Score";
-    static final String STATE_SCORE_2 = "Team 2 Score";
 
     private SelectGameViewModel mViewModel;
     private EditText mTeam1View;
@@ -93,27 +88,17 @@ public class SelectGameFragment extends Fragment {
                 mBillardType = spinner.getSelectedItem().toString();
 
                 SharedPreferences.Editor editor = mPreferences.edit();
-                editor.putInt(ScoresFragment.STATE_SCORE_GAME_1, 0);
-                editor.putInt(ScoresFragment.STATE_SCORE_GAME_2, 0);
-                editor.putInt(ScoresFragment.STATE_SCORE_GAME_1_BEFORE, 0);
-                editor.putInt(ScoresFragment.STATE_SCORE_GAME_2_BEFORE, 0);
                 editor.putInt(ScoresFragment.STATE_SCORE_MATCH_1, 0);
                 editor.putInt(ScoresFragment.STATE_SCORE_MATCH_2, 0);
                 editor.putString(ScoresFragment.STATE_TEAM_1, mTeam1);
                 editor.putString(ScoresFragment.STATE_TEAM_2, mTeam2);
                 editor.putString(ScoresFragment.STATE_SCORE_BILLARD_TYPE, mBillardType);
-                editor.remove(ScoresFragment.STATE_REMAINING_POINTS);
+                editor.putInt(ScoresFragment.STATE_RACETO, mRaceTo);
+                //    editor.remove(ScoresFragment.STATE_REMAINING_POINTS);
                 editor.apply();
 
 
                 Fragment scoresFragment = new ScoresFragment();
-                /*Bundle arguments = new Bundle();
-                arguments.putString(BUNDLE_KEY_TEAM_1, mTeam1);
-                arguments.putString(BUNDLE_KEY_TEAM_2, mTeam2);
-                arguments.putInt(BUNDLE_KEY_RACE_TO, mRaceTo);
-                arguments.putString(BUNDLE_KEY_BILLARD, mBillardType);
-                arguments.putString(BUNDLE_KEY_INIT, "New Match");
-                scoresFragment.setArguments(arguments);*/
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, scoresFragment);
                 transaction.addToBackStack(null);

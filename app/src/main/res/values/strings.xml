@@ -25,9 +25,11 @@
     <string name="team_2">Team 2</string>
     <string name="cancel_last_btn">Cancel</string>
     <string name="menu_select_games">Select Game</string>
-    <string name="dialog_select_team">Select Winning Team</string>
     <string name="endMatch_btn">End Match</string>
     <string name="remaining_points">Remaining points : %1$d</string>
+    <string name="race_to">Race To: %1$d</string>
+    <string name="winning_match">Congratulation to %1$s: You won this match</string>
+    <string name="replay_question">Do you want to replay with same Parameters?</string>
 
     //for billard spinner
     <string-array name="billard_array">

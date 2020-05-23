@@ -18,10 +18,10 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.guillaumegonnet.scorekeeperV2.ui.scores.EndGameDialogFragment;
+import com.guillaumegonnet.scorekeeperV2.ui.scores.EndMatchDialogFragment;
 import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
 
-public class MainActivity extends AppCompatActivity implements EndGameDialogFragment.EndGameDialogListener {
+public class MainActivity extends AppCompatActivity implements EndMatchDialogFragment.EndMatchDialogListener {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements EndGameDialogFrag
                 || super.onSupportNavigateUp();
     }
 
-    //Interface to send back the result of EndGameDialogFragment to ScoresFragment
+    //Interface to send back the result of EndMatchDialogFragment to ScoresFragment
     boolean team1Win = false;
     boolean team2Win = false;
 
@@ -89,20 +89,20 @@ public class MainActivity extends AppCompatActivity implements EndGameDialogFrag
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         if (null != activityListener) {
-            activityListener.IncreaseScoreMatch1();
+            activityListener.startNewMatch();
         }
     }
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
         if (null != activityListener) {
-            activityListener.IncreaseScoreMatch2();
+            activityListener.goHome();
         }
     }
 
     public interface ListenFromActivity {
-        void IncreaseScoreMatch1();
+        void startNewMatch();
 
-        void IncreaseScoreMatch2();
+        void goHome();
     }
 }
