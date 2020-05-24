@@ -81,17 +81,23 @@ public class Match {
                 numberOfRedScored++;
             }
         }
+        int lastIndexofBall1 = ballScoredList.lastIndexOf(1);
+
         // count points for the last color balls as no red entered before
         if (numberOfRedScored == 9 && ballScoredList.size() > 9) {
             int i = ballScoredList.size() - 1;
             int ball = 0;
-            do {
-                ball = ballScoredList.get(i);
-                if (ball > 1) {
-                    valueOfColorAtEndScored += ball;
+
+            while ((ballScoredList.get(i) == ballScoredList.get(i - 1) + 1
+                    || (ballScoredList.get(i) == 2 && i == lastIndexofBall1 + 2))
+                    && i > lastIndexofBall1) {
+                if (ballScoredList.get(i) == 2 && ballScoredList.get(i - 1) > 1) { //1/2/2 case
+                    valueOfColorAtEndScored += 2;
+                } else if (ballScoredList.get(i) == ballScoredList.get(i - 1) + 1) {
+                    valueOfColorAtEndScored += ballScoredList.get(i);
                 }
                 i--;
-            } while (ball != 2 && i > 9);
+            }
         }
 
         return mRemainingPoints - numberOfRedScored * 8 - valueOfColorAtEndScored;

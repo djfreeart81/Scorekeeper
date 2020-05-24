@@ -23,7 +23,7 @@ public class MatchTest {
     }
 
     @Test
-    public void getRemainingPointsTest() {
+    public void getRemainingPointsTestCompleteBalls() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
         LinkedList<LinkedList<Integer>> scoreList = new LinkedList<LinkedList<Integer>>();
