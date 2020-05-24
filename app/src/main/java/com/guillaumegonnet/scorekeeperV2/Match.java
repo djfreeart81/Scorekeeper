@@ -75,18 +75,23 @@ public class Match {
                 ballScoredList.add(list.get(2));
             }
         }
+
         for (int ball : ballScoredList) {
             if (ball == 1) {
                 numberOfRedScored++;
             }
         }
         // count points for the last color balls as no red entered before
-        int i = ballScoredList.size() - 1;
-        if (ballScoredList.size() > 1) {
-            while (ballScoredList.get(i) > 1 && ballScoredList.get(i - 1) > 1) {
-                valueOfColorAtEndScored += ballScoredList.get(i);
+        if (numberOfRedScored == 9 && ballScoredList.size() > 9) {
+            int i = ballScoredList.size() - 1;
+            int ball = 0;
+            do {
+                ball = ballScoredList.get(i);
+                if (ball > 1) {
+                    valueOfColorAtEndScored += ball;
+                }
                 i--;
-            }
+            } while (ball != 2 && i > 9);
         }
 
         return mRemainingPoints - numberOfRedScored * 8 - valueOfColorAtEndScored;

@@ -332,42 +332,45 @@
         android:layout_height="0dp"
         android:layout_weight="4">
 
-        <LinearLayout
-            android:id="@+id/information_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
             <TextView
                 android:id="@+id/remaining_points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start"
                 android:text="@string/remaining_points"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintEnd_toStartOf="@id/raceto"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/raceto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
                 android:text="@string/race_to"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-        </LinearLayout>
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintBaseline_toBaselineOf="@id/remaining_points"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/remaining_points" />
+
+        <TextView
+            android:id="@+id/balls_scored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Balls scored yet"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/remaining_points" />
 
         <Button
             android:id="@+id/endGame_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:text="@string/endGame_btn"
             app:layout_constraintEnd_toStartOf="@id/cancel_btn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/information_layout" />
+            app:layout_constraintTop_toBottomOf="@id/balls_scored" />
 
         <Button
             android:id="@+id/cancel_btn"

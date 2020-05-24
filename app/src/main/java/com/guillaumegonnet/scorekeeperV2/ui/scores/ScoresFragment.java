@@ -47,6 +47,8 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     private TextView mTeamNameText2;
     private TextView mRemainingPointsText;
     private TextView mRaceToText;
+    private TextView mBallsScoredText;
+
     private Button mCancelBtn;
     private Match match;
 
@@ -76,6 +78,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         mCancelBtn = root.findViewById(R.id.cancel_btn);
         mRemainingPointsText = root.findViewById(R.id.remaining_points);
         mRaceToText = root.findViewById(R.id.raceto);
+        mBallsScoredText = root.findViewById(R.id.balls_scored);
 
         mPreferences = getActivity().getSharedPreferences(sharedPrefFile, getActivity().MODE_PRIVATE);
 
@@ -304,8 +307,12 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         match.getRemainingPoints(mScoreList);
         mScoreGameText1.setText(String.valueOf(match.getScoreGame(1, mScoreList)));
         mScoreGameText2.setText(String.valueOf(match.getScoreGame(2, mScoreList)));
-        mCancelBtn.setEnabled(false);
 
+        if (mScoreList.size() == 0) {
+            mCancelBtn.setEnabled(false);
+        }
+
+        mBallsScoredText.setText(getBallsScored(mScoreList));
         savePreferences();
     }
 
@@ -329,7 +336,25 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
                 break;
         }
         mRemainingPointsText.setText(getString(R.string.remaining_points, match.getRemainingPoints(mScoreList)));
+        mBallsScoredText.setText(getBallsScored(mScoreList));
         savePreferences();
+    }
+
+    public String getBallsScored(LinkedList<LinkedList<Integer>> scoreList) {
+        String resultStringTeam1 = "Team 1: ";
+        String resultStringTeam2 = "Team 2: ";
+        for (LinkedList<Integer> list : scoreList) {
+            if (list.get(0) == 1) {
+                if (list.get(1) == 1) {
+                    resultStringTeam1 = resultStringTeam1 + list.get(2) + "F ";
+                } else {
+                    resultStringTeam1 = resultStringTeam1 + list.get(2) + " ";
+                }
+            } else {
+                resultStringTeam2 = resultStringTeam2 + list.get(2) + " ";
+            }
+        }
+        return resultStringTeam1 + "\n" + resultStringTeam2;
     }
 
 
