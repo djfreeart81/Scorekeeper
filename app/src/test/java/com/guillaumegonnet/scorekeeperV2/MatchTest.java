@@ -88,6 +88,39 @@ public class MatchTest {
     }
 
     @Test
+    public void getRemainingPointsTest12234567() {
+
+        Match match = new Match("snooker", "team1", "team2", 4);
+        LinkedList<LinkedList<Integer>> scoreList = new LinkedList<LinkedList<Integer>>();
+
+        scoreList.add(getBall(1, 0, 1));
+        scoreList.add(getBall(1, 0, 5));
+        scoreList.add(getBall(1, 0, 1));
+        scoreList.add(getBall(2, 0, 1));
+        scoreList.add(getBall(1, 1, 4));
+        scoreList.add(getBall(1, 0, 1));
+        scoreList.add(getBall(1, 0, 1));
+        scoreList.add(getBall(1, 0, 5));
+        scoreList.add(getBall(2, 0, 1));
+        scoreList.add(getBall(2, 0, 7));
+        scoreList.add(getBall(2, 0, 1));
+        scoreList.add(getBall(2, 0, 1));
+        scoreList.add(getBall(1, 0, 1));
+        scoreList.add(getBall(1, 0, 2));
+        scoreList.add(getBall(1, 0, 2));
+        scoreList.add(getBall(1, 0, 3));
+        scoreList.add(getBall(1, 0, 4));
+        scoreList.add(getBall(1, 0, 5));
+        scoreList.add(getBall(1, 0, 6));
+        scoreList.add(getBall(1, 0, 7));
+
+
+        int result = match.getRemainingPoints(scoreList);
+
+        assertThat(result, is(equalTo(0)));
+    }
+
+    @Test
     public void getRemainingPointsTestStopBeforeLastColorBalls() {
 
         Match match = new Match("snooker", "team1", "team2", 4);

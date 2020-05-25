@@ -93,6 +93,7 @@ public class Match {
                     && i > lastIndexofBall1) {
                 if (ballScoredList.get(i) == 2 && ballScoredList.get(i - 1) > 1) { //1/2/2 case
                     valueOfColorAtEndScored += 2;
+                    break;
                 } else if (ballScoredList.get(i) == ballScoredList.get(i - 1) + 1) {
                     valueOfColorAtEndScored += ballScoredList.get(i);
                 }
