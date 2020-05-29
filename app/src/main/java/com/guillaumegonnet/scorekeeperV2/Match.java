@@ -16,7 +16,7 @@ public class Match {
     public int mRemainingPoints = 99;
 
     //mBallScoredList contains (team, fault, point)
-    private LinkedList<LinkedList<Integer>> mBallScoredList = new LinkedList<LinkedList<Integer>>();
+    private LinkedList<Score> mBallScoredList = new LinkedList<Score>();
 
 
     public Match(String sportName, String team1, String team2, int mRaceTo) {
@@ -54,25 +54,25 @@ public class Match {
         return mRaceTo;
     }
 
-    public int getScoreGame(int team, LinkedList<LinkedList<Integer>> scoreList) {
-        int score = 0;
-        for (LinkedList<Integer> list : scoreList) {
-            if (list.getFirst() == team) {
-                score += list.getLast();
+    public int getScoreGame(int team, LinkedList<Score> scoreList) {
+        int scoreGame = 0;
+        for (Score score : scoreList) {
+            if (score.team == team) {
+                scoreGame += score.point;
             }
         }
-        return score;
+        return scoreGame;
     }
 
-    public int getRemainingPoints(LinkedList<LinkedList<Integer>> scoreList) {
+    public int getRemainingPoints(LinkedList<Score> scoreList) {
         int numberOfRedScored = 0;
         int valueOfColorAtEndScored = 0;
 
         //create a LinkedList with only ball points (no fault points)
         LinkedList<Integer> ballScoredList = new LinkedList<>();
-        for (LinkedList<Integer> list : scoreList) {
-            if (list.get(1) == 0) {
-                ballScoredList.add(list.get(2));
+        for (Score score : scoreList) {
+            if (score.fault == false) {
+                ballScoredList.add(score.point);
             }
         }
 

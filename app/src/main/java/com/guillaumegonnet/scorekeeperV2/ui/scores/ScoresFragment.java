@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.guillaumegonnet.scorekeeperV2.MainActivity;
 import com.guillaumegonnet.scorekeeperV2.Match;
 import com.guillaumegonnet.scorekeeperV2.R;
+import com.guillaumegonnet.scorekeeperV2.Score;
 import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
 
 import java.util.LinkedList;
@@ -52,7 +53,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     private Button mCancelBtn;
     private Match match;
 
-    private LinkedList<LinkedList<Integer>> mScoreList = new LinkedList<LinkedList<Integer>>();
+    private LinkedList<Score> mScoreList = new LinkedList<Score>();
 
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.guillaumegonnet.scorekeeper";
@@ -140,88 +141,88 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
 
         switch (viewId) {
             case R.id.faultTeam1By1:
-                changeScore(1, 1, 1);
+                changeScore(1, true, 1);
                 break;
             case R.id.faultTeam1By2:
-                changeScore(1, 1, 2);
+                changeScore(1, true, 2);
                 break;
             case R.id.faultTeam1By3:
-                changeScore(1, 1, 3);
+                changeScore(1, true, 3);
                 break;
             case R.id.faultTeam1By4:
-                changeScore(1, 1, 4);
+                changeScore(1, true, 4);
                 break;
             case R.id.faultTeam1By5:
-                changeScore(1, 1, 5);
+                changeScore(1, true, 5);
                 break;
             case R.id.faultTeam1By6:
-                changeScore(1, 1, 6);
+                changeScore(1, true, 6);
                 break;
             case R.id.faultTeam1By7:
-                changeScore(1, 1, 7);
+                changeScore(1, true, 7);
                 break;
             case R.id.faultTeam2By1:
-                changeScore(2, 1, 1);
+                changeScore(2, true, 1);
                 break;
             case R.id.faultTeam2By2:
-                changeScore(2, 1, 2);
+                changeScore(2, true, 2);
                 break;
             case R.id.faultTeam2By3:
-                changeScore(2, 1, 3);
+                changeScore(2, true, 3);
                 break;
             case R.id.faultTeam2By4:
-                changeScore(2, 1, 4);
+                changeScore(2, true, 4);
                 break;
             case R.id.faultTeam2By5:
-                changeScore(2, 1, 5);
+                changeScore(2, true, 5);
                 break;
             case R.id.faultTeam2By6:
-                changeScore(2, 1, 6);
+                changeScore(2, true, 6);
                 break;
             case R.id.faultTeam2By7:
-                changeScore(2, 1, 7);
+                changeScore(2, true, 7);
                 break;
             case R.id.increaseTeam1By1:
-                changeScore(1, 0, 1);
+                changeScore(1, false, 1);
                 break;
             case R.id.increaseTeam1By2:
-                changeScore(1, 0, 2);
+                changeScore(1, false, 2);
                 break;
             case R.id.increaseTeam1By3:
-                changeScore(1, 0, 3);
+                changeScore(1, false, 3);
                 break;
             case R.id.increaseTeam1By4:
-                changeScore(1, 0, 4);
+                changeScore(1, false, 4);
                 break;
             case R.id.increaseTeam1By5:
-                changeScore(1, 0, 5);
+                changeScore(1, false, 5);
                 break;
             case R.id.increaseTeam1By6:
-                changeScore(1, 0, 6);
+                changeScore(1, false, 6);
                 break;
             case R.id.increaseTeam1By7:
-                changeScore(1, 0, 7);
+                changeScore(1, false, 7);
                 break;
             case R.id.increaseTeam2By1:
-                changeScore(2, 0, 1);
+                changeScore(2, false, 1);
                 break;
             case R.id.increaseTeam2By2:
-                changeScore(2, 0, 2);
+                changeScore(2, false, 2);
                 break;
             case R.id.increaseTeam2By3:
-                changeScore(2, 0, 3);
+                changeScore(2, false, 3);
                 break;
             case R.id.increaseTeam2By4:
-                changeScore(2, 0, 4);
+                changeScore(2, false, 4);
                 break;
             case R.id.increaseTeam2By5:
-                changeScore(2, 0, 5);
+                changeScore(2, false, 5);
                 break;
             case R.id.increaseTeam2By6:
-                changeScore(2, 0, 6);
+                changeScore(2, false, 6);
                 break;
             case R.id.increaseTeam2By7:
-                changeScore(2, 0, 7);
+                changeScore(2, false, 7);
                 break;
             case R.id.cancel_btn:
                 cancelLastAction(v);
@@ -316,14 +317,12 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         savePreferences();
     }
 
-    public void changeScore(int team, int fault, int point) {
+    public void changeScore(int team, boolean fault, int point) {
 
         //add ball scored in the List
-        LinkedList<Integer> linkedList = new LinkedList<Integer>();
-        linkedList.add(team);
-        linkedList.add(fault);
-        linkedList.add(point);
-        mScoreList.add(linkedList);
+        Score score = new Score(team, fault, point);
+
+        mScoreList.add(score);
 
         mCancelBtn.setEnabled(true);
 
@@ -340,18 +339,18 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         savePreferences();
     }
 
-    public String getBallsScored(LinkedList<LinkedList<Integer>> scoreList) {
+    public String getBallsScored(LinkedList<Score> scoreList) {
         String resultStringTeam1 = "Team 1: ";
         String resultStringTeam2 = "Team 2: ";
-        for (LinkedList<Integer> list : scoreList) {
-            if (list.get(0) == 1) {
-                if (list.get(1) == 1) {
-                    resultStringTeam1 = resultStringTeam1 + list.get(2) + "F ";
+        for (Score score : scoreList) {
+            if (score.team == 1) {
+                if (score.fault == true) {
+                    resultStringTeam1 = resultStringTeam1 + score.point + "F ";
                 } else {
-                    resultStringTeam1 = resultStringTeam1 + list.get(2) + " ";
+                    resultStringTeam1 = resultStringTeam1 + score.point + " ";
                 }
             } else {
-                resultStringTeam2 = resultStringTeam2 + list.get(2) + " ";
+                resultStringTeam2 = resultStringTeam2 + score.point + " ";
             }
         }
         return resultStringTeam1 + "\n" + resultStringTeam2;
