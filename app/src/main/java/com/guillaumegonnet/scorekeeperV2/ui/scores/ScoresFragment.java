@@ -16,10 +16,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.guillaumegonnet.scorekeeperV2.Game;
 import com.guillaumegonnet.scorekeeperV2.MainActivity;
 import com.guillaumegonnet.scorekeeperV2.Match;
 import com.guillaumegonnet.scorekeeperV2.R;
-import com.guillaumegonnet.scorekeeperV2.Score;
+import com.guillaumegonnet.scorekeeperV2.Shot;
 import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
 
 import java.lang.reflect.Type;
@@ -27,9 +28,8 @@ import java.util.LinkedList;
 
 public class ScoresFragment extends Fragment implements View.OnClickListener, MainActivity.ListenFromActivity {
 
-    public static final String STATE_SCORELIST = "ScoreList";
-    public static final String STATE_SCORE_MATCH_1 = "Team 1 Match Score";
-    public static final String STATE_SCORE_MATCH_2 = "Team 2 Match Score";
+    public static final String STATE_SCORE_MATCH_1 = "Team 1 Match Shot";
+    public static final String STATE_SCORE_MATCH_2 = "Team 2 Match Shot";
     public static final String STATE_SCORE_BILLARD_TYPE = "Billard Type";
     public static final String STATE_TEAM_1 = "Team 1";
     public static final String STATE_TEAM_2 = "Team 2";
@@ -55,8 +55,9 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
 
     private Button mCancelBtn;
     private Match match;
+    private Game game;
 
-    private LinkedList<Score> mScoreList = new LinkedList<Score>();
+    private LinkedList<Shot> mScoreList = new LinkedList<Shot>();
 
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.guillaumegonnet.scorekeeper";
@@ -97,21 +98,22 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
             Gson gson = new Gson();
             String json = mPreferences.getString("scorelist", null);
             if (json != null) {
-                Type type = new TypeToken<LinkedList<Score>>() {
+                Type type = new TypeToken<LinkedList<Shot>>() {
                 }.getType();
                 mScoreList = gson.fromJson(json, type);
             }
         }
 
         match = new Match(mBillardType, mTeamName1, mTeamName2, mRaceTo);
+        game = new Game(mBillardType);
 
         mScoreMatchText1.setText(String.valueOf(mScoreMatch1));
         mScoreMatchText2.setText(String.valueOf(mScoreMatch2));
-        mScoreGameText1.setText(String.valueOf(match.getScoreGame(1, mScoreList)));
-        mScoreGameText2.setText(String.valueOf(match.getScoreGame(2, mScoreList)));
+        mScoreGameText1.setText(String.valueOf(game.getScoreGame(1, mScoreList)));
+        mScoreGameText2.setText(String.valueOf(game.getScoreGame(2, mScoreList)));
         mTeamNameText1.setText(mTeamName1);
         mTeamNameText2.setText(mTeamName2);
-        mRemainingPointsText.setText(getString(R.string.remaining_points, match.getRemainingPoints(mScoreList)));
+        mRemainingPointsText.setText(getString(R.string.remaining_points, game.getRemainingPoints(mScoreList)));
         mRaceToText.setText(getString(R.string.race_to, mRaceTo));
 
         // Create listeners for - buttons
@@ -246,8 +248,8 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
 
     public void endGame(View view) {
 
-        int scoreGame1 = match.getScoreGame(1, mScoreList);
-        int scoreGame2 = match.getScoreGame(2, mScoreList);
+        int scoreGame1 = game.getScoreGame(1, mScoreList);
+        int scoreGame2 = game.getScoreGame(2, mScoreList);
 
         if (scoreGame1 > scoreGame2) {
             Toast.makeText(getContext(), mTeamName1 + " won the game", Toast.LENGTH_SHORT).show();
@@ -270,9 +272,10 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         }
 
         mScoreList.clear();
-        mScoreGameText1.setText(String.valueOf(match.getScoreGame(1, mScoreList)));
-        mScoreGameText2.setText(String.valueOf(match.getScoreGame(2, mScoreList)));
-        mRemainingPointsText.setText(getString(R.string.remaining_points, match.getRemainingPoints(mScoreList)));
+        game = new Game(mBillardType);
+        mScoreGameText1.setText(String.valueOf(game.getScoreGame(1, mScoreList)));
+        mScoreGameText2.setText(String.valueOf(game.getScoreGame(2, mScoreList)));
+        mRemainingPointsText.setText(getString(R.string.remaining_points, game.getRemainingPoints(mScoreList)));
         mCancelBtn.setEnabled(false);
         savePreferences();
     }
@@ -291,7 +294,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     // Methods executed on Listener defined in Main Activity for EndMatchDialogFragment
     @Override
     public void startNewMatch() {
-
+        match = new Match(mBillardType, mTeamName1, mTeamName2, mRaceTo);
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putInt(STATE_SCORE_MATCH_1, 0);
         editor.putInt(STATE_SCORE_MATCH_2, 0);
@@ -316,9 +319,9 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
 
     public void cancelLastAction(View view) {
         mScoreList.removeLast();
-        match.getRemainingPoints(mScoreList);
-        mScoreGameText1.setText(String.valueOf(match.getScoreGame(1, mScoreList)));
-        mScoreGameText2.setText(String.valueOf(match.getScoreGame(2, mScoreList)));
+        game.getRemainingPoints(mScoreList);
+        mScoreGameText1.setText(String.valueOf(game.getScoreGame(1, mScoreList)));
+        mScoreGameText2.setText(String.valueOf(game.getScoreGame(2, mScoreList)));
 
         if (mScoreList.size() == 0) {
             mCancelBtn.setEnabled(false);
@@ -331,37 +334,37 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     public void changeScore(int team, boolean fault, int point) {
 
         //add ball scored in the List
-        Score score = new Score(team, fault, point);
+        Shot shot = new Shot(team, fault, point);
 
-        mScoreList.add(score);
+        mScoreList.add(shot);
 
         mCancelBtn.setEnabled(true);
 
         switch (team) {
             case 1:
-                mScoreGameText1.setText(String.valueOf(match.getScoreGame(1, mScoreList)));
+                mScoreGameText1.setText(String.valueOf(game.getScoreGame(1, mScoreList)));
                 break;
             case 2:
-                mScoreGameText2.setText(String.valueOf(match.getScoreGame(2, mScoreList)));
+                mScoreGameText2.setText(String.valueOf(game.getScoreGame(2, mScoreList)));
                 break;
         }
-        mRemainingPointsText.setText(getString(R.string.remaining_points, match.getRemainingPoints(mScoreList)));
+        mRemainingPointsText.setText(getString(R.string.remaining_points, game.getRemainingPoints(mScoreList)));
         mBallsScoredText.setText(getBallsScored(mScoreList));
         savePreferences();
     }
 
-    public String getBallsScored(LinkedList<Score> scoreList) {
+    public String getBallsScored(LinkedList<Shot> scoreList) {
         String resultStringTeam1 = "Team 1: ";
         String resultStringTeam2 = "Team 2: ";
-        for (Score score : scoreList) {
-            if (score.getTeam() == 1) {
-                if (score.getFault()) {
-                    resultStringTeam1 = resultStringTeam1 + score.getPoint() + "F ";
+        for (Shot shot : scoreList) {
+            if (shot.getTeam() == 1) {
+                if (shot.getFault()) {
+                    resultStringTeam1 = resultStringTeam1 + shot.getPoint() + "F ";
                 } else {
-                    resultStringTeam1 = resultStringTeam1 + score.getPoint() + " ";
+                    resultStringTeam1 = resultStringTeam1 + shot.getPoint() + " ";
                 }
             } else {
-                resultStringTeam2 = resultStringTeam2 + score.getPoint() + " ";
+                resultStringTeam2 = resultStringTeam2 + shot.getPoint() + " ";
             }
         }
         return resultStringTeam1 + "\n" + resultStringTeam2;

@@ -17,31 +17,32 @@ public class MatchTest {
     public void getRemainingPointsTestCompleteBalls() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<Score> scoreList = new LinkedList<Score>();
+        Game game = new Game("snooker");
+        LinkedList<Shot> scoreList = new LinkedList<Shot>();
 
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(1, true, 4));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(2, false, 7));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(1, false, 2));
-        scoreList.add(new Score(1, false, 3));
-        scoreList.add(new Score(1, false, 4));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(1, false, 6));
-        scoreList.add(new Score(1, false, 7));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(1, true, 4));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(2, false, 7));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(1, false, 2));
+        scoreList.add(new Shot(1, false, 3));
+        scoreList.add(new Shot(1, false, 4));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(1, false, 6));
+        scoreList.add(new Shot(1, false, 7));
 
 
-        int result = match.getRemainingPoints(scoreList);
+        int result = game.getRemainingPoints(scoreList);
 
         assertThat(result, is(equalTo(0)));
     }
@@ -50,30 +51,31 @@ public class MatchTest {
     public void getRemainingPointsTestRedBallBeforeLast2() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<Score> scoreList = new LinkedList<Score>();
+        Game game = new Game("snooker");
+        LinkedList<Shot> scoreList = new LinkedList<Shot>();
 
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(1, true, 4));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(2, false, 7));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 2));
-        scoreList.add(new Score(1, false, 3));
-        scoreList.add(new Score(1, false, 4));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(1, false, 6));
-        scoreList.add(new Score(1, false, 7));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(1, true, 4));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(2, false, 7));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 2));
+        scoreList.add(new Shot(1, false, 3));
+        scoreList.add(new Shot(1, false, 4));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(1, false, 6));
+        scoreList.add(new Shot(1, false, 7));
 
 
-        int result = match.getRemainingPoints(scoreList);
+        int result = game.getRemainingPoints(scoreList);
 
         assertThat(result, is(equalTo(0)));
     }
@@ -82,31 +84,32 @@ public class MatchTest {
     public void getRemainingPointsTest12234567() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<Score> scoreList = new LinkedList<Score>();
+        Game game = new Game("snooker");
+        LinkedList<Shot> scoreList = new LinkedList<Shot>();
 
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(1, true, 4));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(2, false, 7));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 2));
-        scoreList.add(new Score(1, false, 2));
-        scoreList.add(new Score(1, false, 3));
-        scoreList.add(new Score(1, false, 4));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(1, false, 6));
-        scoreList.add(new Score(1, false, 7));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(1, true, 4));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(2, false, 7));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 2));
+        scoreList.add(new Shot(1, false, 2));
+        scoreList.add(new Shot(1, false, 3));
+        scoreList.add(new Shot(1, false, 4));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(1, false, 6));
+        scoreList.add(new Shot(1, false, 7));
 
 
-        int result = match.getRemainingPoints(scoreList);
+        int result = game.getRemainingPoints(scoreList);
 
         assertThat(result, is(equalTo(0)));
     }
@@ -115,23 +118,24 @@ public class MatchTest {
     public void getRemainingPointsTestStopBeforeLastColorBalls() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<Score> scoreList = new LinkedList<Score>();
+        Game game = new Game("snooker");
+        LinkedList<Shot> scoreList = new LinkedList<Shot>();
 
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(1, true, 4));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(2, false, 7));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(1, true, 4));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(2, false, 7));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(1, false, 1));
 
-        int result = match.getRemainingPoints(scoreList);
+        int result = game.getRemainingPoints(scoreList);
 
         assertThat(result, is(equalTo(27)));
     }
@@ -140,24 +144,25 @@ public class MatchTest {
     public void getRemainingPointsTestStopAfterLastColorBallBeforeStartingOrder() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<Score> scoreList = new LinkedList<Score>();
+        Game game = new Game("snooker");
+        LinkedList<Shot> scoreList = new LinkedList<Shot>();
 
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(1, true, 4));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 5));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(2, false, 7));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(2, false, 1));
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(1, true, 4));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 5));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(2, false, 7));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(2, false, 1));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 5));
 
-        int result = match.getRemainingPoints(scoreList);
+        int result = game.getRemainingPoints(scoreList);
 
         assertThat(result, is(equalTo(27)));
     }
@@ -166,9 +171,10 @@ public class MatchTest {
     public void getRemainingPointsTestEmpty() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<Score> scoreList = new LinkedList<Score>();
+        Game game = new Game("snooker");
+        LinkedList<Shot> scoreList = new LinkedList<Shot>();
 
-        int result = match.getRemainingPoints(scoreList);
+        int result = game.getRemainingPoints(scoreList);
 
         assertThat(result, is(equalTo(99)));
     }
@@ -177,11 +183,12 @@ public class MatchTest {
     public void getRemainingPointsTest1fault() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<Score> scoreList = new LinkedList<Score>();
+        Game game = new Game("snooker");
+        LinkedList<Shot> scoreList = new LinkedList<Shot>();
 
-        scoreList.add(new Score(1, true, 5));
+        scoreList.add(new Shot(1, true, 5));
 
-        int result = match.getRemainingPoints(scoreList);
+        int result = game.getRemainingPoints(scoreList);
 
         assertThat(result, is(equalTo(99)));
     }
@@ -190,12 +197,13 @@ public class MatchTest {
     public void getRemainingPointsTest2balls() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<Score> scoreList = new LinkedList<Score>();
+        Game game = new Game("snooker");
+        LinkedList<Shot> scoreList = new LinkedList<Shot>();
 
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 5));
 
-        int result = match.getRemainingPoints(scoreList);
+        int result = game.getRemainingPoints(scoreList);
 
         assertThat(result, is(equalTo(91)));
     }
@@ -203,10 +211,11 @@ public class MatchTest {
     @Test
     public void getScoreTest0() {
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<Score> scoreList = new LinkedList<Score>();
+        Game game = new Game("snooker");
+        LinkedList<Shot> scoreList = new LinkedList<Shot>();
 
-        int scoreTeam1 = match.getScoreGame(1, scoreList);
-        int scoreTeam2 = match.getScoreGame(2, scoreList);
+        int scoreTeam1 = game.getScoreGame(1, scoreList);
+        int scoreTeam2 = game.getScoreGame(2, scoreList);
 
         assertThat(scoreTeam1, is(equalTo(0)));
         assertThat(scoreTeam2, is(equalTo(0)));
@@ -215,16 +224,17 @@ public class MatchTest {
     @Test
     public void getScoreTest1() {
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<Score> scoreList = new LinkedList<Score>();
+        Game game = new Game("snooker");
+        LinkedList<Shot> scoreList = new LinkedList<Shot>();
 
-        scoreList.add(new Score(1, false, 1));
-        scoreList.add(new Score(1, false, 3));
-        scoreList.add(new Score(1, true, 5));
-        scoreList.add(new Score(2, true, 7));
-        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Shot(1, false, 1));
+        scoreList.add(new Shot(1, false, 3));
+        scoreList.add(new Shot(1, true, 5));
+        scoreList.add(new Shot(2, true, 7));
+        scoreList.add(new Shot(2, false, 1));
 
-        int scoreTeam1 = match.getScoreGame(1, scoreList);
-        int scoreTeam2 = match.getScoreGame(2, scoreList);
+        int scoreTeam1 = game.getScoreGame(1, scoreList);
+        int scoreTeam2 = game.getScoreGame(2, scoreList);
 
         assertThat(scoreTeam1, is(equalTo(9)));
         assertThat(scoreTeam2, is(equalTo(8)));
