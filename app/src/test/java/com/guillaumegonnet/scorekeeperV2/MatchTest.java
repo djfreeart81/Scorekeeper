@@ -13,41 +13,32 @@ import static org.junit.Assert.assertThat;
  */
 public class MatchTest {
 
-
-    public LinkedList<Integer> getBall(int team, int fault, int point) {
-        LinkedList<Integer> score = new LinkedList<Integer>();
-        score.add(team);
-        score.add(fault);
-        score.add(point);
-        return score;
-    }
-
     @Test
     public void getRemainingPointsTestCompleteBalls() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<LinkedList<Integer>> scoreList = new LinkedList<LinkedList<Integer>>();
+        LinkedList<Score> scoreList = new LinkedList<Score>();
 
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(1, 1, 4));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(2, 0, 7));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(1, 0, 2));
-        scoreList.add(getBall(1, 0, 3));
-        scoreList.add(getBall(1, 0, 4));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(1, 0, 6));
-        scoreList.add(getBall(1, 0, 7));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(1, true, 4));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(2, false, 7));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(1, false, 2));
+        scoreList.add(new Score(1, false, 3));
+        scoreList.add(new Score(1, false, 4));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(1, false, 6));
+        scoreList.add(new Score(1, false, 7));
 
 
         int result = match.getRemainingPoints(scoreList);
@@ -59,27 +50,27 @@ public class MatchTest {
     public void getRemainingPointsTestRedBallBeforeLast2() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<LinkedList<Integer>> scoreList = new LinkedList<LinkedList<Integer>>();
+        LinkedList<Score> scoreList = new LinkedList<Score>();
 
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(1, 1, 4));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(2, 0, 7));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 2));
-        scoreList.add(getBall(1, 0, 3));
-        scoreList.add(getBall(1, 0, 4));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(1, 0, 6));
-        scoreList.add(getBall(1, 0, 7));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(1, true, 4));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(2, false, 7));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 2));
+        scoreList.add(new Score(1, false, 3));
+        scoreList.add(new Score(1, false, 4));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(1, false, 6));
+        scoreList.add(new Score(1, false, 7));
 
 
         int result = match.getRemainingPoints(scoreList);
@@ -91,28 +82,28 @@ public class MatchTest {
     public void getRemainingPointsTest12234567() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<LinkedList<Integer>> scoreList = new LinkedList<LinkedList<Integer>>();
+        LinkedList<Score> scoreList = new LinkedList<Score>();
 
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(1, 1, 4));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(2, 0, 7));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 2));
-        scoreList.add(getBall(1, 0, 2));
-        scoreList.add(getBall(1, 0, 3));
-        scoreList.add(getBall(1, 0, 4));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(1, 0, 6));
-        scoreList.add(getBall(1, 0, 7));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(1, true, 4));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(2, false, 7));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 2));
+        scoreList.add(new Score(1, false, 2));
+        scoreList.add(new Score(1, false, 3));
+        scoreList.add(new Score(1, false, 4));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(1, false, 6));
+        scoreList.add(new Score(1, false, 7));
 
 
         int result = match.getRemainingPoints(scoreList);
@@ -124,21 +115,21 @@ public class MatchTest {
     public void getRemainingPointsTestStopBeforeLastColorBalls() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<LinkedList<Integer>> scoreList = new LinkedList<LinkedList<Integer>>();
+        LinkedList<Score> scoreList = new LinkedList<Score>();
 
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(1, 1, 4));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(2, 0, 7));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(1, 0, 1));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(1, true, 4));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(2, false, 7));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(1, false, 1));
 
         int result = match.getRemainingPoints(scoreList);
 
@@ -149,22 +140,22 @@ public class MatchTest {
     public void getRemainingPointsTestStopAfterLastColorBallBeforeStartingOrder() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<LinkedList<Integer>> scoreList = new LinkedList<LinkedList<Integer>>();
+        LinkedList<Score> scoreList = new LinkedList<Score>();
 
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(1, 1, 4));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 5));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(2, 0, 7));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(2, 0, 1));
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 5));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(1, true, 4));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 5));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(2, false, 7));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(2, false, 1));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 5));
 
         int result = match.getRemainingPoints(scoreList);
 
@@ -175,7 +166,7 @@ public class MatchTest {
     public void getRemainingPointsTestEmpty() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<LinkedList<Integer>> scoreList = new LinkedList<LinkedList<Integer>>();
+        LinkedList<Score> scoreList = new LinkedList<Score>();
 
         int result = match.getRemainingPoints(scoreList);
 
@@ -186,9 +177,9 @@ public class MatchTest {
     public void getRemainingPointsTest1fault() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<LinkedList<Integer>> scoreList = new LinkedList<LinkedList<Integer>>();
+        LinkedList<Score> scoreList = new LinkedList<Score>();
 
-        scoreList.add(getBall(1, 1, 5));
+        scoreList.add(new Score(1, true, 5));
 
         int result = match.getRemainingPoints(scoreList);
 
@@ -199,10 +190,10 @@ public class MatchTest {
     public void getRemainingPointsTest2balls() {
 
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<LinkedList<Integer>> scoreList = new LinkedList<LinkedList<Integer>>();
+        LinkedList<Score> scoreList = new LinkedList<Score>();
 
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 5));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 5));
 
         int result = match.getRemainingPoints(scoreList);
 
@@ -212,7 +203,7 @@ public class MatchTest {
     @Test
     public void getScoreTest0() {
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<LinkedList<Integer>> scoreList = new LinkedList<LinkedList<Integer>>();
+        LinkedList<Score> scoreList = new LinkedList<Score>();
 
         int scoreTeam1 = match.getScoreGame(1, scoreList);
         int scoreTeam2 = match.getScoreGame(2, scoreList);
@@ -224,13 +215,13 @@ public class MatchTest {
     @Test
     public void getScoreTest1() {
         Match match = new Match("snooker", "team1", "team2", 4);
-        LinkedList<LinkedList<Integer>> scoreList = new LinkedList<LinkedList<Integer>>();
+        LinkedList<Score> scoreList = new LinkedList<Score>();
 
-        scoreList.add(getBall(1, 0, 1));
-        scoreList.add(getBall(1, 0, 3));
-        scoreList.add(getBall(1, 1, 5));
-        scoreList.add(getBall(2, 1, 7));
-        scoreList.add(getBall(2, 0, 1));
+        scoreList.add(new Score(1, false, 1));
+        scoreList.add(new Score(1, false, 3));
+        scoreList.add(new Score(1, true, 5));
+        scoreList.add(new Score(2, true, 7));
+        scoreList.add(new Score(2, false, 1));
 
         int scoreTeam1 = match.getScoreGame(1, scoreList);
         int scoreTeam2 = match.getScoreGame(2, scoreList);
