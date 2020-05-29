@@ -14,12 +14,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.guillaumegonnet.scorekeeperV2.MainActivity;
 import com.guillaumegonnet.scorekeeperV2.Match;
 import com.guillaumegonnet.scorekeeperV2.R;
 import com.guillaumegonnet.scorekeeperV2.Score;
 import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
 
+import java.lang.reflect.Type;
 import java.util.LinkedList;
 
 public class ScoresFragment extends Fragment implements View.OnClickListener, MainActivity.ListenFromActivity {
@@ -90,6 +93,14 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
             mTeamName2 = mPreferences.getString(SelectGameFragment.BUNDLE_KEY_TEAM_2, getString(R.string.team_2));
             mBillardType = mPreferences.getString(STATE_SCORE_BILLARD_TYPE, "Billard");
             mRaceTo = mPreferences.getInt(STATE_RACETO, 1);
+
+            Gson gson = new Gson();
+            String json = mPreferences.getString("scorelist", null);
+            if (json != null) {
+                Type type = new TypeToken<LinkedList<Score>>() {
+                }.getType();
+                mScoreList = gson.fromJson(json, type);
+            }
         }
 
         match = new Match(mBillardType, mTeamName1, mTeamName2, mRaceTo);
@@ -344,7 +355,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         String resultStringTeam2 = "Team 2: ";
         for (Score score : scoreList) {
             if (score.getTeam() == 1) {
-                if (score.getFault() == true) {
+                if (score.getFault()) {
                     resultStringTeam1 = resultStringTeam1 + score.getPoint() + "F ";
                 } else {
                     resultStringTeam1 = resultStringTeam1 + score.getPoint() + " ";
@@ -359,8 +370,9 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
 
     public void savePreferences() {
         SharedPreferences.Editor editor = mPreferences.edit();
-
-
+        Gson gson = new Gson();
+        String json = gson.toJson(mScoreList);
+        editor.putString("scorelist", json);
         editor.commit();
     }
 }
