@@ -343,14 +343,14 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         String resultStringTeam1 = "Team 1: ";
         String resultStringTeam2 = "Team 2: ";
         for (Score score : scoreList) {
-            if (score.team == 1) {
-                if (score.fault == true) {
-                    resultStringTeam1 = resultStringTeam1 + score.point + "F ";
+            if (score.getTeam() == 1) {
+                if (score.getFault() == true) {
+                    resultStringTeam1 = resultStringTeam1 + score.getPoint() + "F ";
                 } else {
-                    resultStringTeam1 = resultStringTeam1 + score.point + " ";
+                    resultStringTeam1 = resultStringTeam1 + score.getPoint() + " ";
                 }
             } else {
-                resultStringTeam2 = resultStringTeam2 + score.point + " ";
+                resultStringTeam2 = resultStringTeam2 + score.getPoint() + " ";
             }
         }
         return resultStringTeam1 + "\n" + resultStringTeam2;
@@ -359,7 +359,6 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
 
     public void savePreferences() {
         SharedPreferences.Editor editor = mPreferences.edit();
-        //    editor.putInt(STATE_SCORE_GAME_1, mScoreGame1);
 
 
         editor.commit();
