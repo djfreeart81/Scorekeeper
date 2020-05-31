@@ -12,7 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,6 +20,7 @@ import com.guillaumegonnet.scorekeeperV2.MainActivity;
 import com.guillaumegonnet.scorekeeperV2.Match;
 import com.guillaumegonnet.scorekeeperV2.R;
 import com.guillaumegonnet.scorekeeperV2.Shot;
+import com.guillaumegonnet.scorekeeperV2.db.ShotDb;
 import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
 
 import java.lang.reflect.Type;
@@ -70,8 +70,8 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        mScoresViewModel =
-                ViewModelProviders.of(this).get(ScoresViewModel.class);
+//        mScoresViewModel = new ViewModelProvider(this).get(ScoresViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_scores, container, false);
 
         mScoreMatchText1 = root.findViewById(R.id.scoreMatch1);
@@ -335,6 +335,9 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
 
         //add ball scored in the List
         Shot shot = new Shot(team, fault, point);
+        ShotDb shotDb = new ShotDb(team, fault, point);
+
+    //    mScoresViewModel.insert(shotDb);
 
         mScoreList.add(shot);
 

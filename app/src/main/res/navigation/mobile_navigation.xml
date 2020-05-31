@@ -15,9 +15,9 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.guillaumegonnet.scorekeeperV2.ui.slideshow.SlideshowFragment"
+        android:name="com.guillaumegonnet.scorekeeperV2.ui.statistics.StatisticsFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_statistics" />
     <fragment
         android:id="@+id/nav_scores"
         android:name="com.guillaumegonnet.scorekeeperV2.ui.scores.ScoresFragment"

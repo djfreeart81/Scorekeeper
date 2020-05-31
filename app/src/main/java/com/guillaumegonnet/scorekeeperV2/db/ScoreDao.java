@@ -5,7 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Guillaume Gonnet on 30/05/20.
@@ -19,7 +19,10 @@ public interface ScoreDao {
     @Delete
     void delete(ShotDb Shot);
 
+    @Query("DELETE FROM shot_table")
+    void deleteAll();
+
     @Query("SELECT * FROM shot_table WHERE fault='false'")
-    LiveData<LinkedList<ShotDb>> getShots();
+    LiveData<List<ShotDb>> getShots();
 
 }

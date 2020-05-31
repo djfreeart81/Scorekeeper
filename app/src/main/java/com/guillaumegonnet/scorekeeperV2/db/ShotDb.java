@@ -2,6 +2,7 @@ package com.guillaumegonnet.scorekeeperV2.db;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -27,6 +28,20 @@ public class ShotDb {
         this.team = team;
         this.fault = fault;
         this.point = point;
+    }
+
+    @Ignore
+    public ShotDb(int id, int team, boolean fault, int point) {
+        this.id = id;
+        this.team = team;
+        this.fault = fault;
+        this.point = point;
+    }
+
+    public int getId() {return id;}
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getTeam() {

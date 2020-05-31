@@ -1,21 +1,23 @@
-package com.guillaumegonnet.scorekeeperV2.ui.scores;
+package com.guillaumegonnet.scorekeeperV2.ui.statistics;
 
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.guillaumegonnet.scorekeeperV2.db.ScoreRepository;
 import com.guillaumegonnet.scorekeeperV2.db.ShotDb;
 
 import java.util.List;
 
-public class ScoresViewModel extends AndroidViewModel {
+public class StatisticsViewModel extends AndroidViewModel {
 
+    private MutableLiveData<String> mText;
     private ScoreRepository mRepository;
     private LiveData<List<ShotDb>> mShots;
 
-    public ScoresViewModel(Application application) {
+    public StatisticsViewModel(Application application) {
         super(application);
         mRepository = new ScoreRepository(application);
         mShots = mRepository.getShots();
