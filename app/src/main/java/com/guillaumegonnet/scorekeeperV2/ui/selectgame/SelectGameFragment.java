@@ -94,6 +94,7 @@ public class SelectGameFragment extends Fragment {
                 editor.putString(ScoresFragment.STATE_TEAM_2, mTeam2);
                 editor.putString(ScoresFragment.STATE_SCORE_BILLARD_TYPE, mBillardType);
                 editor.putInt(ScoresFragment.STATE_RACETO, mRaceTo);
+                editor.remove("scorelist");
                 editor.apply();
 
 
