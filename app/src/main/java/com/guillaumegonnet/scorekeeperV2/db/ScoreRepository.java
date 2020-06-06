@@ -22,7 +22,7 @@ public class ScoreRepository {
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
     public LiveData<List<ShotDb>> getShots() {
-        return getShots();
+        return mShots;
     }
 
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures

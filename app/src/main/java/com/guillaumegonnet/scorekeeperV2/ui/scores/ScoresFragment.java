@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -66,11 +67,13 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainActivity) getActivity()).setActivityListener(ScoresFragment.this);
+
+        mScoresViewModel = new ViewModelProvider(this).get(ScoresViewModel.class);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-//        mScoresViewModel = new ViewModelProvider(this).get(ScoresViewModel.class);
+
 
         View root = inflater.inflate(R.layout.fragment_scores, container, false);
 
@@ -337,7 +340,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         Shot shot = new Shot(team, fault, point);
         ShotDb shotDb = new ShotDb(team, fault, point);
 
-    //    mScoresViewModel.insert(shotDb);
+        mScoresViewModel.insert(shotDb);
 
         mScoreList.add(shot);
 
@@ -372,7 +375,6 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         }
         return resultStringTeam1 + "\n" + resultStringTeam2;
     }
-
 
     public void savePreferences() {
         SharedPreferences.Editor editor = mPreferences.edit();
