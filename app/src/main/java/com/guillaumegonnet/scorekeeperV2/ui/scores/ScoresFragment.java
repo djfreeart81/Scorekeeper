@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.gson.Gson;
@@ -21,7 +22,8 @@ import com.guillaumegonnet.scorekeeperV2.MainActivity;
 import com.guillaumegonnet.scorekeeperV2.Match;
 import com.guillaumegonnet.scorekeeperV2.R;
 import com.guillaumegonnet.scorekeeperV2.Shot;
-import com.guillaumegonnet.scorekeeperV2.db.ShotDb;
+import com.guillaumegonnet.scorekeeperV2.db.Game.GameDb;
+import com.guillaumegonnet.scorekeeperV2.db.Match.MatchDb;
 import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
 
 import java.lang.reflect.Type;
@@ -57,6 +59,9 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     private Button mCancelBtn;
     private Match match;
     private Game game;
+
+    private LiveData<MatchDb> mMatchDb;
+    private LiveData<GameDb> mGameDb;
 
     private LinkedList<Shot> mScoreList = new LinkedList<Shot>();
 
@@ -110,6 +115,9 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         match = new Match(mBillardType, mTeamName1, mTeamName2, mRaceTo);
         game = new Game(mBillardType);
 
+        mMatchDb = mScoresViewModel.getOngoingMatch();
+        mGameDb = mScoresViewModel.getOngoingGame();
+
         mScoreMatchText1.setText(String.valueOf(mScoreMatch1));
         mScoreMatchText2.setText(String.valueOf(mScoreMatch2));
         mScoreGameText1.setText(String.valueOf(game.getScoreGame(1, mScoreList)));
@@ -157,88 +165,88 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
 
         switch (viewId) {
             case R.id.faultTeam1By1:
-                changeScore(1, true, 1);
+                shotBall(1, true, 1);
                 break;
             case R.id.faultTeam1By2:
-                changeScore(1, true, 2);
+                shotBall(1, true, 2);
                 break;
             case R.id.faultTeam1By3:
-                changeScore(1, true, 3);
+                shotBall(1, true, 3);
                 break;
             case R.id.faultTeam1By4:
-                changeScore(1, true, 4);
+                shotBall(1, true, 4);
                 break;
             case R.id.faultTeam1By5:
-                changeScore(1, true, 5);
+                shotBall(1, true, 5);
                 break;
             case R.id.faultTeam1By6:
-                changeScore(1, true, 6);
+                shotBall(1, true, 6);
                 break;
             case R.id.faultTeam1By7:
-                changeScore(1, true, 7);
+                shotBall(1, true, 7);
                 break;
             case R.id.faultTeam2By1:
-                changeScore(2, true, 1);
+                shotBall(2, true, 1);
                 break;
             case R.id.faultTeam2By2:
-                changeScore(2, true, 2);
+                shotBall(2, true, 2);
                 break;
             case R.id.faultTeam2By3:
-                changeScore(2, true, 3);
+                shotBall(2, true, 3);
                 break;
             case R.id.faultTeam2By4:
-                changeScore(2, true, 4);
+                shotBall(2, true, 4);
                 break;
             case R.id.faultTeam2By5:
-                changeScore(2, true, 5);
+                shotBall(2, true, 5);
                 break;
             case R.id.faultTeam2By6:
-                changeScore(2, true, 6);
+                shotBall(2, true, 6);
                 break;
             case R.id.faultTeam2By7:
-                changeScore(2, true, 7);
+                shotBall(2, true, 7);
                 break;
             case R.id.increaseTeam1By1:
-                changeScore(1, false, 1);
+                shotBall(1, false, 1);
                 break;
             case R.id.increaseTeam1By2:
-                changeScore(1, false, 2);
+                shotBall(1, false, 2);
                 break;
             case R.id.increaseTeam1By3:
-                changeScore(1, false, 3);
+                shotBall(1, false, 3);
                 break;
             case R.id.increaseTeam1By4:
-                changeScore(1, false, 4);
+                shotBall(1, false, 4);
                 break;
             case R.id.increaseTeam1By5:
-                changeScore(1, false, 5);
+                shotBall(1, false, 5);
                 break;
             case R.id.increaseTeam1By6:
-                changeScore(1, false, 6);
+                shotBall(1, false, 6);
                 break;
             case R.id.increaseTeam1By7:
-                changeScore(1, false, 7);
+                shotBall(1, false, 7);
                 break;
             case R.id.increaseTeam2By1:
-                changeScore(2, false, 1);
+                shotBall(2, false, 1);
                 break;
             case R.id.increaseTeam2By2:
-                changeScore(2, false, 2);
+                shotBall(2, false, 2);
                 break;
             case R.id.increaseTeam2By3:
-                changeScore(2, false, 3);
+                shotBall(2, false, 3);
                 break;
             case R.id.increaseTeam2By4:
-                changeScore(2, false, 4);
+                shotBall(2, false, 4);
                 break;
             case R.id.increaseTeam2By5:
-                changeScore(2, false, 5);
+                shotBall(2, false, 5);
                 break;
             case R.id.increaseTeam2By6:
-                changeScore(2, false, 6);
+                shotBall(2, false, 6);
                 break;
             case R.id.increaseTeam2By7:
-                changeScore(2, false, 7);
+                shotBall(2, false, 7);
                 break;
             case R.id.cancel_btn:
                 cancelLastAction(v);
@@ -261,6 +269,7 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
             SharedPreferences.Editor editor = mPreferences.edit();
             editor.putInt(STATE_SCORE_MATCH_1, mScoreMatch1);
             editor.apply();
+
         } else if (scoreGame2 > scoreGame1) {
             Toast.makeText(getContext(), mTeamName2 + " won the game", Toast.LENGTH_SHORT).show();
             mScoreMatch2++;
@@ -298,6 +307,8 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
     @Override
     public void startNewMatch() {
         match = new Match(mBillardType, mTeamName1, mTeamName2, mRaceTo);
+
+
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putInt(STATE_SCORE_MATCH_1, 0);
         editor.putInt(STATE_SCORE_MATCH_2, 0);
@@ -334,13 +345,13 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         savePreferences();
     }
 
-    public void changeScore(int team, boolean fault, int point) {
+    public void shotBall(int team, boolean fault, int point) {
 
         //add ball scored in the List
         Shot shot = new Shot(team, fault, point);
-        ShotDb shotDb = new ShotDb(team, fault, point);
 
-        mScoresViewModel.insert(shotDb);
+        // ShotDb shotDb = new ShotDb(team, fault, point,mGameDb.getId());
+        //   mScoresViewModel.insert(shotDb);
 
         mScoreList.add(shot);
 

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.guillaumegonnet.scorekeeperV2.R;
-import com.guillaumegonnet.scorekeeperV2.db.ShotDb;
+import com.guillaumegonnet.scorekeeperV2.db.Shot.ShotDb;
 
 import java.util.List;
 
@@ -33,8 +33,6 @@ public class StatisticsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-        //final TextView textView = root.findViewById(R.id.text_slideshow);
         mStatisticsViewModel.getShots().observe(getViewLifecycleOwner(), new Observer<List<ShotDb>>() {
             @Override
             public void onChanged(@Nullable final List<ShotDb> shot) {

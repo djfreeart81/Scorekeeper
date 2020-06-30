@@ -1,4 +1,4 @@
-package com.guillaumegonnet.scorekeeperV2.db;
+package com.guillaumegonnet.scorekeeperV2.db.Shot;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Delete;
@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 @androidx.room.Dao
-public interface ScoreDao {
+public interface ShotDao {
     @Insert
     void insert(ShotDb shot);
 

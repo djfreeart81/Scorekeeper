@@ -2,9 +2,12 @@ package com.guillaumegonnet.scorekeeperV2;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
@@ -31,6 +34,29 @@ public class MainActivity extends AppCompatActivity implements EndMatchDialogFra
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        // Change the label of the menu based on the state of the app.
+        int nightMode = AppCompatDelegate.getDefaultNightMode();
+        if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            menu.findItem(R.id.night_mode).setTitle(R.string.day_mode);
+        } else {
+            menu.findItem(R.id.night_mode).setTitle(R.string.night_mode);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.night_mode:
+                int nightMode = AppCompatDelegate.getDefaultNightMode();
+                if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
+                recreate();
+        }
 
         return true;
     }
@@ -41,10 +67,6 @@ public class MainActivity extends AppCompatActivity implements EndMatchDialogFra
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-    //Interface to send back the result of EndMatchDialogFragment to ScoresFragment
-    boolean team1Win = false;
-    boolean team2Win = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements EndMatchDialogFra
 
     public interface ListenFromActivity {
         void startNewMatch();
-
         void goHome();
     }
 }

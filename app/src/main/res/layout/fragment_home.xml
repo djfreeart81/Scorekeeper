@@ -44,4 +44,12 @@
         android:layout_marginTop="@dimen/nav_header_vertical_spacing"
         android:text="Placeholder statistics"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <Button
+        android:id="@+id/reset_db_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+        android:text="Reset Db" />
+
 </LinearLayout>

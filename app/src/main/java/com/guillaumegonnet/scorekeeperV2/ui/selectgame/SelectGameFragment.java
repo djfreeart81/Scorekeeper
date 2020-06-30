@@ -17,9 +17,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.guillaumegonnet.scorekeeperV2.R;
+import com.guillaumegonnet.scorekeeperV2.db.Game.GameDb;
+import com.guillaumegonnet.scorekeeperV2.db.Match.MatchDb;
 import com.guillaumegonnet.scorekeeperV2.ui.scores.ScoresFragment;
 
 import static java.lang.Integer.valueOf;
@@ -41,6 +44,7 @@ public class SelectGameFragment extends Fragment {
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.guillaumegonnet.scorekeeper";
 
+    private SelectGameViewModel mSelectGameViewModel;
 
     public static SelectGameFragment newInstance() {
         return new SelectGameFragment();
@@ -54,6 +58,8 @@ public class SelectGameFragment extends Fragment {
         mTeam1View = root.findViewById(R.id.team1_edit);
         mTeam2View = root.findViewById(R.id.team2_edit);
         mRaceToView = root.findViewById(R.id.raceto_edit);
+
+        mSelectGameViewModel = new ViewModelProvider(this).get(SelectGameViewModel.class);
 
         mPreferences = getActivity().getSharedPreferences(sharedPrefFile, getActivity().MODE_PRIVATE);
 
@@ -87,6 +93,9 @@ public class SelectGameFragment extends Fragment {
                 mRaceTo = valueOf(mRaceToView.getText().toString());
                 mBillardType = spinner.getSelectedItem().toString();
 
+                MatchDb matchDb = new MatchDb(mTeam1, mTeam2, 0, 0);
+                mSelectGameViewModel.insertMatch(matchDb);
+
                 SharedPreferences.Editor editor = mPreferences.edit();
                 editor.putInt(ScoresFragment.STATE_SCORE_MATCH_1, 0);
                 editor.putInt(ScoresFragment.STATE_SCORE_MATCH_2, 0);
@@ -97,6 +106,11 @@ public class SelectGameFragment extends Fragment {
                 editor.remove("scorelist");
                 editor.apply();
 
+                //TODO: remove execution from main thread by creating async function or using coroutine, or converting LiveData
+                int matchId = mSelectGameViewModel.getOngoingMatchIdInteger();
+
+                GameDb gameDb = new GameDb(0, 0, matchId);
+                mSelectGameViewModel.insertGame(gameDb);
 
                 Fragment scoresFragment = new ScoresFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();

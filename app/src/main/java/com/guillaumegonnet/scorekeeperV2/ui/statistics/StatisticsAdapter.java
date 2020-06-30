@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.guillaumegonnet.scorekeeperV2.R;
-import com.guillaumegonnet.scorekeeperV2.db.ShotDb;
+import com.guillaumegonnet.scorekeeperV2.db.Shot.ShotDb;
 
 import java.util.List;
 
