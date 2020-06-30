@@ -27,6 +27,7 @@ public class ScoreRepository {
     private LiveData<GameDb> mOngoingGame;
     private LiveData<Integer> mOngoingMatchId;
     private int mOngoingMatchIdInteger;
+    private int mOngoingGameIdInteger;
 
     public ScoreRepository(Application application) {
         ScoreRoomDatabase db = ScoreRoomDatabase.getDatabase(application);
@@ -39,6 +40,7 @@ public class ScoreRepository {
         mOngoingGame = mGameDao.getOngoingGame();
         mOngoingMatchId = mMatchDao.getOngoingMatchId();
         mOngoingMatchIdInteger = mMatchDao.getOngoingMatchIdInteger();
+        mOngoingGameIdInteger = mGameDao.getOngoingGameIdInteger();
     }
 
     // Room executes all queries on a separate thread.
@@ -66,6 +68,10 @@ public class ScoreRepository {
 
     public int getOnGoingMatchIdInteger() {
         return mOngoingMatchIdInteger;
+    }
+
+    public int getOnGoingGameIdInteger() {
+        return mOngoingGameIdInteger;
     }
 
 

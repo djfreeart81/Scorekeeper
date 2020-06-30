@@ -27,4 +27,7 @@ public interface GameDao {
     @Query("SELECT * FROM game_table ORDER BY ID DESC LIMIT 1")
     LiveData<GameDb> getOngoingGame();
 
+    @Query("SELECT ID FROM match_table ORDER BY ID DESC LIMIT 1")
+    int getOngoingGameIdInteger();
+
 }

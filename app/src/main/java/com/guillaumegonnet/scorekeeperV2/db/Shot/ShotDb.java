@@ -12,7 +12,7 @@ import com.guillaumegonnet.scorekeeperV2.db.Game.GameDb;
  * Created by Guillaume Gonnet on 30/05/20.
  */
 
-@Entity(tableName = "shot_table", foreignKeys = @ForeignKey(entity = GameDb.class, parentColumns = "id", childColumns = "id"))
+@Entity(tableName = "shot_table", foreignKeys = @ForeignKey(entity = GameDb.class, parentColumns = "id", childColumns = "gameId"))
 public class ShotDb {
 
     @PrimaryKey(autoGenerate = true)

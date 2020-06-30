@@ -18,6 +18,7 @@ public class ScoresViewModel extends AndroidViewModel {
     private LiveData<List<ShotDb>> mShots;
     private LiveData<GameDb> mGame;
     private LiveData<MatchDb> mMatch;
+    private int mOngoingGameIdInteger;
 
     public ScoresViewModel(Application application) {
         super(application);
@@ -25,6 +26,7 @@ public class ScoresViewModel extends AndroidViewModel {
         mShots = mRepository.getShots();
         mGame = mRepository.getOnGoingGame();
         mMatch = mRepository.getOnGoingMatch();
+        mOngoingGameIdInteger = mRepository.getOnGoingGameIdInteger();
     }
 
     public LiveData<List<ShotDb>> getShots() {
@@ -41,5 +43,9 @@ public class ScoresViewModel extends AndroidViewModel {
 
     public LiveData<GameDb> getOngoingGame() {
         return mGame;
+    }
+
+    public int getOngoingGameIdInteger() {
+        return mOngoingGameIdInteger;
     }
 }

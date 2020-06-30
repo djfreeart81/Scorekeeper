@@ -24,6 +24,7 @@ import com.guillaumegonnet.scorekeeperV2.R;
 import com.guillaumegonnet.scorekeeperV2.Shot;
 import com.guillaumegonnet.scorekeeperV2.db.Game.GameDb;
 import com.guillaumegonnet.scorekeeperV2.db.Match.MatchDb;
+import com.guillaumegonnet.scorekeeperV2.db.Shot.ShotDb;
 import com.guillaumegonnet.scorekeeperV2.ui.selectgame.SelectGameFragment;
 
 import java.lang.reflect.Type;
@@ -350,8 +351,8 @@ public class ScoresFragment extends Fragment implements View.OnClickListener, Ma
         //add ball scored in the List
         Shot shot = new Shot(team, fault, point);
 
-        // ShotDb shotDb = new ShotDb(team, fault, point,mGameDb.getId());
-        //   mScoresViewModel.insert(shotDb);
+        ShotDb shotDb = new ShotDb(team, fault, point, mScoresViewModel.getOngoingGameIdInteger());
+        mScoresViewModel.insert(shotDb);
 
         mScoreList.add(shot);
 
